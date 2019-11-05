@@ -23,7 +23,11 @@ abstract public class Snake extends Graphic {
             segments.add(new Segment(10 - i, 10 - i, Color.RED)); //TODO: checks to make sure we don't start snake off screen and add real values for coordinates
         }
     }
-    public Snake(int x, int y, Color color, int length){}
+    public Snake(int x, int y, Color color, int length){
+     for(int i = 0; i < length; i++){
+            segments.add(new Segment(x - i, y, color)); //TODO: checks to make sure we don't start snake off screen
+        }
+        direction = Direction.NORTH;}
     
     //TODO
     @Override

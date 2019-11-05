@@ -19,10 +19,6 @@ public class CPU1 extends Snake{
     }
     public CPU1(int x, int y, Color color, int length){
         super(x, y, color, length);
-        for(int i = 0; i < length; i++){
-            super.segments.add(new Segment(x - i, y, color)); //TODO: checks to make sure we don't start snake off screen
-        }
-        super.direction = Direction.NORTH;
     }
     
     private int iterations = -1;

@@ -3,6 +3,8 @@ package sneaky.snakes;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -11,7 +13,7 @@ import javax.swing.JFrame;
  *
  * @author 10158564
  */
-public class SneakySnakes extends Canvas implements Runnable {
+public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     //contains 
     ArrayList<Graphic> graphics = new ArrayList<>();
     
@@ -24,6 +26,21 @@ public class SneakySnakes extends Canvas implements Runnable {
     //private Menu menu;
     
     public final String TITLE = "Sneaky Snakes";
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
     public static enum STATE {
         MENU,
