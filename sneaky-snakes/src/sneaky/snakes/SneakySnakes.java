@@ -1,14 +1,10 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
 package sneaky.snakes;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
@@ -16,8 +12,9 @@ import javax.swing.JFrame;
  * @author 10158564
  */
 public class SneakySnakes extends Canvas implements Runnable {
+    //contains 
+    ArrayList<Graphic> graphics = new ArrayList<>();
     
-    //
     private boolean running = false;
     private Thread thread;
     public static final int WIDTH = 320;
@@ -26,7 +23,7 @@ public class SneakySnakes extends Canvas implements Runnable {
     private static SneakySnakes instance;
     //private Menu menu;
     
-  public final String TITLE = "Sneaky Snakes";
+    public final String TITLE = "Sneaky Snakes";
     
     public static enum STATE {
         MENU,
