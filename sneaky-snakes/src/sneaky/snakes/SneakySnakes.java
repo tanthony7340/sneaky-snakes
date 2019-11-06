@@ -33,17 +33,47 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-            System.out.println("Key Pressed");
+        System.out.println("Key Pressed="+e.getKeyCode());
+        switch(e.getKeyCode()){
+            case 37:
+                player.influenceDirection(Direction.WEST);
+                break;
+            case 38:
+                player.influenceDirection(Direction.NORTH);
+                break;
+            case 39:
+                player.influenceDirection(Direction.EAST);
+                break;
+            case 40:
+                player.influenceDirection(Direction.SOUTH);
+                break;
+            case 65:
+                player.influenceDirection(Direction.WEST);
+                break;
+            case 87:
+                player.influenceDirection(Direction.NORTH);
+                break;
+            case 68:
+                player.influenceDirection(Direction.EAST);
+                break;
+            case 83:
+                player.influenceDirection(Direction.SOUTH);
+                break;
+            default:
+                break;
+                            
+        }
+
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void keyReleased(KeyEvent e) { 
+        
     }
     
     public static enum STATE {
@@ -195,9 +225,11 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(50, 50, Color.white, 2);
+        player = new Player1(50, 50, Color.white, 2, this);
         state=STATE.GAME;
+        
         // Add input listeners
+        addKeyListener(this);
         
         
         
