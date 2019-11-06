@@ -6,6 +6,7 @@
 package sneaky.snakes;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +28,12 @@ abstract public class Snake extends Graphic {
      for(int i = 0; i < length; i++){
             segments.add(new Segment(x - i, y, color)); //TODO: checks to make sure we don't start snake off screen
         }
-        direction = Direction.NORTH;}
+        direction = Direction.NORTH;
+    
+    this.x=x;
+    this.y=y;
+    
+    }
     
     //TODO
     @Override
@@ -39,8 +45,9 @@ abstract public class Snake extends Graphic {
     
     //TODO
     @Override
-    public Object render() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void render(Graphics g) {
+        g.setColor(Color.white);
+        g.fillRect(x, y, 50, 5);
     }
     
     abstract Direction algorithm();

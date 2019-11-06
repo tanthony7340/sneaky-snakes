@@ -1,6 +1,9 @@
 package sneaky.snakes;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import static java.awt.Color.black;
+import static java.awt.Color.white;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -23,6 +26,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public static final int HEIGHT = WIDTH / 12 * 9;
     public static final int SCALE = 2;
     private static SneakySnakes instance;
+    private Player1 player;
     //private Menu menu;
     
     public final String TITLE = "Sneaky Snakes";
@@ -97,7 +101,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             lastTime = now;
             if(delta >= 1)
             {
-                tick(); // Calculates
+                update(); // Calculates
                 updates++;
                 delta--;
             }
@@ -143,11 +147,11 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         System.exit(1);
     }
     
-    private void tick()
+    private void update()
     {
         if(state == STATE.GAME)
         {
-            
+            player.update();
             
         }
     }
@@ -166,9 +170,13 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         }
         
         Graphics g = bs.getDrawGraphics();
-        
+        g.setColor(black);
+        g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
+        player = new Player1(50, 50, Color.white, 2);
+        player.render(g);
         
         if(state == STATE.GAME) {
+            //player.render;
             
         }else if(state == STATE.MENU) {
             //menu.render(g);
@@ -187,7 +195,6 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        
         
         // Add input listeners
         

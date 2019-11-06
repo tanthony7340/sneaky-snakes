@@ -6,6 +6,7 @@
 package sneaky.snakes;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
@@ -59,5 +60,10 @@ public class CPU1 extends Snake{
     @Override
     public String toString(){
        return super.segments.toString();
+    }
+
+    @Override
+    public void render(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

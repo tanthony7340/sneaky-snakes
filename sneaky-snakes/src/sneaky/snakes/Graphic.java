@@ -5,13 +5,17 @@
  */
 package sneaky.snakes;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author tommy
  */
 abstract class Graphic{
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
+    protected int velX;
+    protected int velY;
     
     
     public Graphic(){
@@ -28,7 +32,7 @@ abstract class Graphic{
     public abstract void update();
     
     //returns some representation(we need to figure out what that is) of what the Graphic should look like on the screen
-    public abstract Object render();
+    public abstract void render(Graphics g);
     
     public int getX(){
         return x;
