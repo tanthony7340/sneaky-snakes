@@ -7,12 +7,14 @@ package sneaky.snakes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  *
  * @author 10160106
  */
-public class Player1 extends Snake {
+public class Player1 extends Snake{
     public Player1(){
         super();
     }
@@ -22,14 +24,12 @@ public class Player1 extends Snake {
     
     @Override
     Direction algorithm() {
-        throw new UnsupportedOperationException("Not supported yet.");
+           return Direction.SOUTH;
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
-        System.out.println("x="+x);
-        System.out.println("super.x="+super.x);
         g.fillRect(super.x, super.y, 16, 16);
     }
 }

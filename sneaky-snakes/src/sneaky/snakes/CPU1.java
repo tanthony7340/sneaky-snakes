@@ -8,6 +8,7 @@ package sneaky.snakes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -53,7 +54,7 @@ public class CPU1 extends Snake{
         return super.getY();
     }
     
-    public ArrayList<Segment> getSegments(){
+    public LinkedList<Segment> getSegments(){
         return super.segments;
     }
     

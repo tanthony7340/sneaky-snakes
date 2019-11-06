@@ -8,6 +8,7 @@ package sneaky.snakes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -16,7 +17,8 @@ import java.util.ArrayList;
 
 abstract public class Snake extends Graphic {
     
-    ArrayList<Segment> segments = new ArrayList<>();
+    LinkedList<Segment> segments = new LinkedList<>(); 
+
     Direction direction = Direction.NORTH;
     
     public Snake(){
@@ -38,9 +40,23 @@ abstract public class Snake extends Graphic {
     //TODO
     @Override
     public void update(){
-        //do a bunch of stuff using:
-        this.algorithm();
-        
+        direction = this.algorithm();
+        switch (direction){
+            case NORTH:
+                this.y -= 1;
+                break;
+            case EAST:
+                this.x += 1;
+                break;
+            case SOUTH:
+                this.y += 1;
+                break;
+            case WEST:
+                this.x -= 1;
+                break;
+        }
+        segments.addFirst(new Segment(this.x, this.y, Color.WHITE));
+        segments.removeLast();
     }
     
     //TODO

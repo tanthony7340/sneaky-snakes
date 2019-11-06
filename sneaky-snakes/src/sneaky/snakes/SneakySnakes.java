@@ -38,7 +38,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+            System.out.println("Key Pressed");
     }
 
     @Override
@@ -172,7 +172,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         Graphics g = bs.getDrawGraphics();
         g.setColor(black);
         g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
-        player = new Player1(50, 50, Color.white, 2);
+        //player = new Player1(50, 50, Color.white, 2);
         player.render(g);
         
         if(state == STATE.GAME) {
@@ -195,8 +195,11 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        
+        player = new Player1(50, 50, Color.white, 2);
+        state=STATE.GAME;
         // Add input listeners
+        
+        
         
     }
 }
