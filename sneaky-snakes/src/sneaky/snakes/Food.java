@@ -6,6 +6,7 @@
 package sneaky.snakes;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
@@ -27,8 +28,9 @@ public class Food extends Graphic{
 
 
     @Override
-    public Object render() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void render(Graphics g) {
+        g.setColor(Color.white);
+        g.fillRect(super.x, super.y, 8, 8);;
     }
     
     @Override

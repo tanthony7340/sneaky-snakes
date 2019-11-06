@@ -34,6 +34,7 @@ abstract public class Snake extends Graphic {
     
     this.x=x;
     this.y=y;
+    this.color=color;
     
     }
     
@@ -76,5 +77,10 @@ abstract public class Snake extends Graphic {
     @Override
     public int getY(){
         return super.getY();
+    }
+    
+    public void addSegment(int x, int y, Color color)
+    {
+        segments.add(new Segment(x, y, color));
     }
 }
