@@ -172,7 +172,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         Graphics g = bs.getDrawGraphics();
         g.setColor(black);
         g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
-        player = new Player1(50, 50, Color.white, 2);
+        player = new Player1(50, 50, Color.white, 5);
         player.render(g);
         
         if(state == STATE.GAME) {

@@ -5,6 +5,7 @@
  */
 package sneaky.snakes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -16,6 +17,7 @@ abstract class Graphic{
     protected int y;
     protected int velX;
     protected int velY;
+    protected Color color;
     
     
     public Graphic(){
