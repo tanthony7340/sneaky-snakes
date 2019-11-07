@@ -19,8 +19,8 @@ public class CPU1 extends Snake{
     public CPU1(){
         super();
     }
-    public CPU1(int x, int y, Color color, int length){
-        super(x, y, color, length);
+    public CPU1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
+        super(x, y, color, length, sneakysnakes);
     }
     
     private int iterations = -1;
@@ -65,6 +65,6 @@ public class CPU1 extends Snake{
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.render(g);
     }
 }

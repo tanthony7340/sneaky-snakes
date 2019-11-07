@@ -17,7 +17,7 @@ public class Player1 extends Snake{
         super();
     }
     public Player1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
-        super(x, y, color, length);
+        super(x, y, color, length, sneakysnakes);
         this.direction=Direction.SOUTH;
     }
     
@@ -28,8 +28,11 @@ public class Player1 extends Snake{
     
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect(super.x, super.y, 16, 16);
+       super.render(g);
         
+    }
+    @Override
+    public void update(){
+        super.update();
     }
 }

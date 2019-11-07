@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  *
@@ -64,7 +65,11 @@ abstract public class Snake extends Graphic {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(x, y, 50, 5);
+        ListIterator<Segment> iterator = segments.listIterator();
+        while(iterator.hasNext()){
+            Segment next = iterator.next();
+            g.fillRect(next.x*16, next.y*16, 16, 16);
+        }
     }
     
     abstract Direction algorithm();

@@ -14,23 +14,22 @@ import java.util.ArrayList;
  * @author tommy
  */
 public class Food extends Graphic{
-    private ArrayList<Segment> segments = new ArrayList<>(); //will only ever be one segment, but for dispay consistency i put it in an arraylist
+    private final Segment segment; //will only ever be one segment, but for dispay consistency i put it in an arraylist
     
     public Food(int x, int y, Color color){
-        segments.add(new Segment(x, y, color));
+        super(x,y);
+        segment = new Segment(x, y, color);
     }
     
     
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    public void update() {}
 
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect(super.x, super.y, 8, 8);;
+        g.setColor(segment.color);
+        g.fillRect(super.x*16, super.y*16, 16, 16);;
     }
     
     @Override
@@ -44,12 +43,14 @@ public class Food extends Graphic{
     }
    
     public ArrayList<Segment> getSegments(){
+        ArrayList<Segment> segments= new ArrayList<>();
+        segments.add(segment);
         return segments;
     }
     
     @Override
     public String toString(){
-       return segments.toString();
+       return segment.toString();
     }
     
 }

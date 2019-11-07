@@ -24,9 +24,8 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     private Thread thread;
     public static final int WIDTH = 320;
     public static final int HEIGHT = WIDTH / 12 * 9;
-    public static final int SCALE = 2;
+    public static final int SCALE = 4;
     private static SneakySnakes instance;
-    private Player1 player;
     //private Menu menu;
     
     public final String TITLE = "Sneaky Snakes";
@@ -117,7 +116,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         init();
         
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 60.0; // 60 Ticks per second
+        final double amountOfTicks = 30.0; // 60 Ticks per second
         double ns = 1_000_000_000 / amountOfTicks;
         double delta = 0;
         int updates = 0;
@@ -181,7 +180,10 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     {
         if(state == STATE.GAME)
         {
-            player.update();
+            for(Graphic graphic: graphics){
+                graphic.update();
+            }
+            
             
         }
     }
@@ -203,10 +205,11 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         g.setColor(black);
         g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
         //player = new Player1(50, 50, Color.white, 2);
-        player.render(g);
         
         if(state == STATE.GAME) {
-            //player.render;
+            for(Graphic graphic: graphics){
+                graphic.render(g);
+            }
             
         }else if(state == STATE.MENU) {
             //menu.render(g);
@@ -223,9 +226,15 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         return instance;
     }
     
+    Player1 player;
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(50, 50, Color.white, 2, this);
+        player = new Player1(4, 4, Color.white, 50, this);
+        Food food = new Food(8, 8, Color.BLUE);
+        CPU1 cpu = new CPU1(6,6, Color.RED,4, this);
+        graphics.add(player);
+        graphics.add(food);
+        graphics.add(cpu);
         state=STATE.GAME;
         
         // Add input listeners
