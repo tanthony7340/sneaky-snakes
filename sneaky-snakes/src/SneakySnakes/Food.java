@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sneaky.snakes;
+package SneakySnakes;
 
+import static SneakySnakes.Snake.SIZE_X;
+import static SneakySnakes.Snake.SIZE_Y;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 /**
@@ -15,10 +18,15 @@ import java.util.ArrayList;
  */
 public class Food extends Graphic{
     private final Segment segment; //will only ever be one segment, but for dispay consistency i put it in an arraylist
+    //public Rectangle hitbox;
     
-    public Food(int x, int y, Color color){
-        super(x,y);
-        segment = new Segment(x, y, color);
+    
+    public Food(int x, int y, Color color, SneakySnakes sneakysnakes){
+        super(x,y,sneakysnakes);        
+        this.sneakysnakes=sneakysnakes;
+        segment = new Segment(x, y, color, sneakysnakes);
+        this.hitbox=new Rectangle(x,y,SIZE_X, SIZE_Y);
+        addToGraphicsList();
     }
     
     

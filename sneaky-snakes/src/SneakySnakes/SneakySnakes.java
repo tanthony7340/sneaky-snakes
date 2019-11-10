@@ -1,4 +1,4 @@
-package sneaky.snakes;
+package SneakySnakes;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -17,8 +17,9 @@ import javax.swing.JFrame;
  * @author 10158564
  */
 public class SneakySnakes extends Canvas implements Runnable, KeyListener {
+   
     //contains 
-    ArrayList<Graphic> graphics = new ArrayList<>();
+    ArrayList<Graphic> graphicsList = new ArrayList<>(); //changed name from graphics to graphicsList to avoid naming conflicts
     
     private boolean running = false;
     private Thread thread;
@@ -26,8 +27,9 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public static final int HEIGHT = WIDTH / 12 * 9;
     public static final int SCALE = 4;
     private static SneakySnakes instance;
-    //private Menu menu;
+    public Player1 player;
     
+    //private Menu menu;
     public final String TITLE = "Sneaky Snakes";
 
     @Override
@@ -37,7 +39,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("Key Pressed="+e.getKeyCode());
+        //System.out.println("Key Pressed="+e.getKeyCode());
         switch(e.getKeyCode()){
             case 37:
                 player.influenceDirection(Direction.WEST);
@@ -180,7 +182,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     {
         if(state == STATE.GAME)
         {
-            for(Graphic graphic: graphics){
+            for(Graphic graphic: graphicsList){
                 graphic.update();
             }
             
@@ -207,7 +209,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         //player = new Player1(50, 50, Color.white, 2);
         
         if(state == STATE.GAME) {
-            for(Graphic graphic: graphics){
+            for(Graphic graphic: graphicsList){
                 graphic.render(g);
             }
             
@@ -226,21 +228,25 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         return instance;
     }
     
-    Player1 player;
+    
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(4, 4, Color.white, 50, this);
-        Food food = new Food(8, 8, Color.BLUE);
+        player = new Player1(4, 4, Color.white, 5, this);
+        Food food = new Food(4, 4, Color.BLUE, this);
         CPU1 cpu = new CPU1(6,6, Color.RED,4, this);
-        graphics.add(player);
-        graphics.add(food);
-        graphics.add(cpu);
+        //graphicsList.add(player);
+        //graphicsList.add(food);
+        //graphicsList.add(cpu);
         state=STATE.GAME;
         
         // Add input listeners
         addKeyListener(this);
         
-        
-        
     }
+
+    public ArrayList<Graphic> getGraphicsList() {
+        return graphicsList;
+    }
+    
+    
 }

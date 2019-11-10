@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sneaky.snakes;
+package SneakySnakes;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -19,6 +19,8 @@ public class Player1 extends Snake{
     public Player1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
         super(x, y, color, length, sneakysnakes);
         this.direction=Direction.SOUTH;
+        this.sneakysnakes=sneakysnakes;
+        addToGraphicsList();
     }
     
     @Override

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sneaky.snakes;
+package SneakySnakes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -18,30 +19,41 @@ import java.util.ListIterator;
 
 abstract public class Snake extends Graphic {
     
+    //
+    static final int SIZE_Y=16;
+    static final int SIZE_X=16;;
+    
     LinkedList<Segment> segments = new LinkedList<>(); 
 
     Direction direction = Direction.NORTH;
     
     public Snake(){
         for(int i = 0; i < 2; i++){
-            segments.add(new Segment(10 - i, 10 - i, Color.RED)); //TODO: checks to make sure we don't start snake off screen and add real values for coordinates
+            segments.add(new Segment(10 - i, 10 - i, Color.RED, sneakysnakes)); //TODO: checks to make sure we don't start snake off screen and add real values for coordinates
         }
     }
     public Snake(int x, int y, Color color, int length,SneakySnakes sneakysnakes){
-     for(int i = 0; i < length; i++){
-            segments.add(new Segment(x - i, y, color)); //TODO: checks to make sure we don't start snake off screen
+        
+        this.x=x;
+        this.y=y;
+        this.color=color;
+        this.sneakysnakes=sneakysnakes;
+        
+        for(int i = 0; i < length; i++){
+            segments.add(new Segment(x - i, y, color, sneakysnakes)); //TODO: checks to make sure we don't start snake off screen
         }
         direction = Direction.NORTH;
-    
-    this.x=x;
-    this.y=y;
-    this.color=color;
-    
+        
     }
     
     //TODO
     @Override
     public void update(){
+        
+        //collisions
+        
+        
+        
         direction = this.algorithm();
         switch (direction){
             case NORTH:
@@ -57,18 +69,24 @@ abstract public class Snake extends Graphic {
                 this.x -= 1;
                 break;
         }
-        segments.addFirst(new Segment(this.x, this.y, Color.WHITE));
+        segments.addFirst(new Segment(this.x, this.y, Color.WHITE,sneakysnakes));
         segments.removeLast();
+        
+        checkCollisions(sneakysnakes);
+        
     }
     
     //TODO
     @Override
     public void render(Graphics g) {
+        
+        //Nothing to render?
+        
         g.setColor(Color.white);
         ListIterator<Segment> iterator = segments.listIterator();
         while(iterator.hasNext()){
             Segment next = iterator.next();
-            g.fillRect(next.x*16, next.y*16, 16, 16);
+            g.fillRect(next.x*SIZE_X, next.y*SIZE_Y, SIZE_X, SIZE_Y);
         }
     }
     
@@ -86,10 +104,28 @@ abstract public class Snake extends Graphic {
     
     public void addSegment(int x, int y, Color color)
     {
-        segments.add(new Segment(x, y, color));
+        segments.add(new Segment(x, y, color, sneakysnakes));
     }
     
     public void influenceDirection(Direction directionIn){
         this.direction=directionIn;
     }
+    
+    public void checkCollisions(SneakySnakes game)
+    {
+        
+        //if(player.getBounds().intersects(enemy.getBounds()))
+        
+        //Process the snakes segments against graphics
+        for(Graphic item:sneakysnakes.getGraphicsList()){
+            for(Segment seg:segments){
+                if(seg.getHitbox().intersects(item.getHitbox()))
+                {
+                    System.out.println("Collision="+item);
+                }
+                
+            }
+            
+        }
+    }//check col
 }

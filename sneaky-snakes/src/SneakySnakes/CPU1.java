@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sneaky.snakes;
+package SneakySnakes;
 
+import static SneakySnakes.Snake.SIZE_X;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -21,6 +23,8 @@ public class CPU1 extends Snake{
     }
     public CPU1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
         super(x, y, color, length, sneakysnakes);
+        this.hitbox=new Rectangle(x,y,SIZE_X, SIZE_Y);
+        addToGraphicsList();
     }
     
     private int iterations = -1;
