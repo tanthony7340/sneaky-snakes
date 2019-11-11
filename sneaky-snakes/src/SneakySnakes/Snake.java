@@ -43,7 +43,6 @@ abstract public class Snake extends Graphic {
             segments.add(new Segment(x - i, y, color, sneakysnakes)); //TODO: checks to make sure we don't start snake off screen
         }
         direction = Direction.NORTH;
-        
     }
     
     //TODO
@@ -118,14 +117,15 @@ abstract public class Snake extends Graphic {
         
         //Process the snakes segments against graphics
         for(Graphic item:sneakysnakes.getGraphicsList()){
-            for(Segment seg:segments){
-                if(seg.getHitbox().intersects(item.getHitbox()))
-                {
-                    System.out.println("Collision="+item);
+            if(item.getID() != this.getID()){
+                for(Segment seg:segments){
+                    if(seg.getHitbox().intersects(item.getHitbox()))
+                    {
+                        System.out.println("Collision="+item);
+                    }
+
                 }
-                
             }
-            
         }
     }//check col
 }

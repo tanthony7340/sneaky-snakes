@@ -14,6 +14,7 @@ import java.awt.Rectangle;
  * @author tommy
  */
 abstract class Graphic{
+    private int ID = 0;
     protected int x;
     protected int y;
     protected int velX;
@@ -26,7 +27,8 @@ abstract class Graphic{
     
     public Graphic(){
         this.x=0;
-        this.y=0;        
+        this.y=0;
+        ID=0;
         //this.sneakysnakes=sneakysnakes;
         //addToGraphicsList();
         //Set null
@@ -37,7 +39,10 @@ abstract class Graphic{
         
         this.x = x;
         this.y = y;
+        sneakysnakes.graphicAdded();
+        ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
+
         //addToGraphicsList();
     }
     
@@ -46,8 +51,11 @@ abstract class Graphic{
         this.x = x;
         this.y = y;        
         this.hitbox=new Rectangle(x, y, hitbox_X_Size,hitbox_Y_Size);
+        sneakysnakes.graphicAdded();
+        ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
         //addToGraphicsList();
+        
     }
     
     //changes state on each tick (location, direction, powerup status, etc)
@@ -73,4 +81,7 @@ abstract class Graphic{
         this.sneakysnakes.getGraphicsList().add(this);
     }
     
+    public int getID(){
+        return ID;
+    }
 }

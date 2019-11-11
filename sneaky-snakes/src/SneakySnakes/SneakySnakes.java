@@ -19,7 +19,7 @@ import javax.swing.JFrame;
 public class SneakySnakes extends Canvas implements Runnable, KeyListener {
    
     //contains 
-    ArrayList<Graphic> graphicsList = new ArrayList<>(); //changed name from graphics to graphicsList to avoid naming conflicts
+    volatile ArrayList<Graphic> graphicsList = new ArrayList<>(); //changed name from graphics to graphicsList to avoid naming conflicts
     
     private boolean running = false;
     private Thread thread;
@@ -28,6 +28,8 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public static final int SCALE = 4;
     private static SneakySnakes instance;
     public Player1 player;
+    
+    public int numObjects = 0;
     
     //private Menu menu;
     public final String TITLE = "Sneaky Snakes";
@@ -178,7 +180,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         System.exit(1);
     }
     
-    private void update()
+    private synchronized void update()
     {
         if(state == STATE.GAME)
         {
@@ -246,6 +248,10 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
 
     public ArrayList<Graphic> getGraphicsList() {
         return graphicsList;
+    }
+    
+    public void graphicAdded(){
+        numObjects++;
     }
     
     
