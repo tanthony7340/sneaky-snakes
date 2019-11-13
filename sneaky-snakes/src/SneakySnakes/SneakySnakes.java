@@ -233,12 +233,17 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(4, 4, Color.white, 5, this);
+        player = new Player1(5, 5, Color.white, 5, this);
         Food food = new Food(4, 4, Color.BLUE, this);
         CPU1 cpu = new CPU1(6,6, Color.RED,4, this);
-        //graphicsList.add(player);
-        //graphicsList.add(food);
-        //graphicsList.add(cpu);
+        graphicsList.add(player);
+        graphicsList.add(food);
+        graphicsList.add(cpu);
+        
+        System.out.println("food id="+food.getID());
+        System.out.println("player id="+player.getID());
+        System.out.println("cpu id=" +cpu.getID());
+        
         state=STATE.GAME;
         
         // Add input listeners

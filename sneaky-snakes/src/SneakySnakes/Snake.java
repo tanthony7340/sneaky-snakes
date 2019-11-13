@@ -113,15 +113,14 @@ abstract public class Snake extends Graphic {
     public void checkCollisions(SneakySnakes game)
     {
         
-        //if(player.getBounds().intersects(enemy.getBounds()))
-        
         //Process the snakes segments against graphics
         for(Graphic item:sneakysnakes.getGraphicsList()){
             if(item.getID() != this.getID()){
                 for(Segment seg:segments){
                     if(seg.getHitbox().intersects(item.getHitbox()))
                     {
-                        System.out.println("Collision="+item);
+                        System.out.println("Collision="+item+". ID="+item.getID()+"item.getHitbox()"+item.getHitbox());
+                        System.out.println("Segment="+seg+"seg.getHitbox()"+seg.getHitbox());
                     }
 
                 }

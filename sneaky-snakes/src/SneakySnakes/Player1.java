@@ -20,7 +20,6 @@ public class Player1 extends Snake{
         super(x, y, color, length, sneakysnakes);
         this.direction=Direction.SOUTH;
         this.sneakysnakes=sneakysnakes;
-        addToGraphicsList();
     }
     
     @Override

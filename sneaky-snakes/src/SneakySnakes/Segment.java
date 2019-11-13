@@ -27,7 +27,6 @@ class Segment extends Graphic{
         this.color = color;
         this.sneakysnakes=sneakysnakes;
         this.hitbox=new Rectangle(x,y,SIZE_X, SIZE_Y);
-        //addToGraphicsList();
     }
     
     @Override

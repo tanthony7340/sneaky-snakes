@@ -25,8 +25,7 @@ public class Food extends Graphic{
         super(x,y,sneakysnakes);        
         this.sneakysnakes=sneakysnakes;
         segment = new Segment(x, y, color, sneakysnakes);
-        this.hitbox=new Rectangle(x,y,SIZE_X, SIZE_Y);
-        addToGraphicsList();
+        this.hitbox=new Rectangle(0,0,0,0);
     }
     
     

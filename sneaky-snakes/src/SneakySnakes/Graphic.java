@@ -29,9 +29,6 @@ abstract class Graphic{
         this.x=0;
         this.y=0;
         ID=0;
-        //this.sneakysnakes=sneakysnakes;
-        //addToGraphicsList();
-        //Set null
         hitbox=new Rectangle(0, 0, 0, 0);
     }
     
@@ -42,8 +39,6 @@ abstract class Graphic{
         sneakysnakes.graphicAdded();
         ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
-
-        //addToGraphicsList();
     }
     
     public Graphic(int x, int y,int hitbox_X_Size,int hitbox_Y_Size,SneakySnakes sneakysnakes){
@@ -54,7 +49,6 @@ abstract class Graphic{
         sneakysnakes.graphicAdded();
         ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
-        //addToGraphicsList();
         
     }
     
@@ -74,11 +68,6 @@ abstract class Graphic{
 
     public Rectangle getHitbox() {
         return hitbox;
-    }
-    
-    public void addToGraphicsList()
-    {
-        this.sneakysnakes.getGraphicsList().add(this);
     }
     
     public int getID(){
