@@ -71,7 +71,7 @@ abstract public class Snake extends Graphic {
         segments.addFirst(new Segment(this.x, this.y, Color.WHITE,sneakysnakes));
         segments.removeLast();
         
-        checkCollisions(sneakysnakes);
+        // OLD checkCollisions(sneakysnakes);
         
     }
     
@@ -110,21 +110,9 @@ abstract public class Snake extends Graphic {
         this.direction=directionIn;
     }
     
-    public void checkCollisions(SneakySnakes game)
+    public LinkedList<Segment> getSegmentList()
     {
-        
-        //Process the snakes segments against graphics
-        for(Graphic item:sneakysnakes.getGraphicsList()){
-            if(item.getID() != this.getID()){
-                for(Segment seg:segments){
-                    if(seg.getHitbox().intersects(item.getHitbox()))
-                    {
-                        System.out.println("Collision="+item+". ID="+item.getID()+"item.getHitbox()"+item.getHitbox());
-                        System.out.println("Segment="+seg+"seg.getHitbox()"+seg.getHitbox());
-                    }
-
-                }
-            }
-        }
-    }//check col
+        return segments;
+    }
+    
 }

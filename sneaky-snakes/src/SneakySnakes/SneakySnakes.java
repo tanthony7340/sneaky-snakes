@@ -10,6 +10,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -134,10 +137,17 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             lastTime = now;
             if(delta >= 1)
             {
+                checkCollisions();
                 update(); // Calculates
                 updates++;
                 delta--;
             }
+            
+            //This lets Andrew Computer run the program
+            try {
+                TimeUnit.MILLISECONDS.sleep(15);} 
+            catch (InterruptedException ex) {}
+            
             
             render(); // Shows
             frames++;
@@ -234,13 +244,16 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
         player = new Player1(5, 5, Color.white, 5, this);
-        Food food = new Food(4, 4, Color.BLUE, this);
+        Food food = new Food(5, 20, Color.BLUE, this);
+        Food food2 = new Food(5, 21, Color.BLUE, this);
         CPU1 cpu = new CPU1(6,6, Color.RED,4, this);
         graphicsList.add(player);
         graphicsList.add(food);
+        graphicsList.add(food2);
         graphicsList.add(cpu);
         
         System.out.println("food id="+food.getID());
+        System.out.println("food hitbox="+food.getHitbox());
         System.out.println("player id="+player.getID());
         System.out.println("cpu id=" +cpu.getID());
         
@@ -260,4 +273,22 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     }
     
     
+    public void checkCollisions()
+    {
+        
+        //Process the snakes segments against graphics
+        for(Graphic item:getGraphicsList()){ //Get all graphic items
+            
+            for(Segment seg:player.getSegmentList()){ //Get the snake segments
+                if(seg.getHitbox().intersects(item.getHitbox()))//Collision?
+                {
+                    System.out.println("Collision="+item+". ID="+item.getID()+"item.getHitbox()"+item.getHitbox());
+                    System.out.println("Segment="+seg+"seg.getHitbox()"+seg.getHitbox());
+                }
+                
+            }
+            
+        }
+    }//check col
+          
 }

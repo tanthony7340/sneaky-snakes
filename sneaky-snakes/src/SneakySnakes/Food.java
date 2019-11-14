@@ -5,8 +5,6 @@
  */
 package SneakySnakes;
 
-import static SneakySnakes.Snake.SIZE_X;
-import static SneakySnakes.Snake.SIZE_Y;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -17,6 +15,9 @@ import java.util.ArrayList;
  * @author tommy
  */
 public class Food extends Graphic{
+    
+    private static int food_X=16;
+    private static int food_Y=16;
     private final Segment segment; //will only ever be one segment, but for dispay consistency i put it in an arraylist
     //public Rectangle hitbox;
     
@@ -25,7 +26,7 @@ public class Food extends Graphic{
         super(x,y,sneakysnakes);        
         this.sneakysnakes=sneakysnakes;
         segment = new Segment(x, y, color, sneakysnakes);
-        this.hitbox=new Rectangle(0,0,0,0);
+        this.hitbox=new Rectangle(x,y,food_X,food_Y);
     }
     
     

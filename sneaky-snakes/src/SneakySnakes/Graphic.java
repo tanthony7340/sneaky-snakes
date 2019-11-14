@@ -39,6 +39,7 @@ abstract class Graphic{
         sneakysnakes.graphicAdded();
         ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
+        hitbox=new Rectangle(0, 0, 0, 0);
     }
     
     public Graphic(int x, int y,int hitbox_X_Size,int hitbox_Y_Size,SneakySnakes sneakysnakes){
@@ -49,6 +50,7 @@ abstract class Graphic{
         sneakysnakes.graphicAdded();
         ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
+        hitbox=new Rectangle(0, 0, 0, 0);
         
     }
     
