@@ -89,6 +89,19 @@ abstract public class Snake extends Graphic {
         }
     }
     
+    @Override
+    public boolean isOverlapped(){
+        ListIterator<Segment> iterator = segments.listIterator();
+        Segment head = iterator.next();
+        while(iterator.hasNext()){
+            Segment current = iterator.next();
+            if(head.x == current.x && head.y == current.y){
+                return true;
+            }        
+        }
+        return false;
+    }
+    
     abstract Direction algorithm();
    
     @Override

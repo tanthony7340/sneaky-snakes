@@ -13,37 +13,21 @@ import static SneakySnakes.Snake.SIZE_Y;
 import static SneakySnakes.Snake.SIZE_X;
 
 
-class Segment extends Graphic{
+class Segment{
     int x;
     int y;
-    Color color;
-    Rectangle hitbox;    
+    Color color; 
     SneakySnakes sneakysnakes;
     
     public Segment(int x, int y, Color color,SneakySnakes sneakysnakes){
-        super(x, y, SIZE_X, SIZE_Y,sneakysnakes);
         this.x = x;
         this.y = y;
         this.color = color;
         this.sneakysnakes=sneakysnakes;
-        this.hitbox=new Rectangle(x,y,SIZE_X, SIZE_Y);
     }
     
     @Override
     public String toString(){
         return "X Coord is: " + x + " Y Coord is: " + y + "\n";
     }
-
-    @Override
-    public void update() {}
-
-    @Override
-    public void render(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect(x*SIZE_X, y*SIZE_Y, SIZE_X, SIZE_Y);
-        
-    }
-
-    
-    
 }

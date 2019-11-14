@@ -21,15 +21,11 @@ abstract class Graphic{
     protected int velY;
     protected Color color;
     protected SneakySnakes sneakysnakes;
-    protected Rectangle hitbox;
-    //protected int hitbox;
-    
     
     public Graphic(){
         this.x=0;
         this.y=0;
         ID=0;
-        hitbox=new Rectangle(0, 0, 0, 0);
     }
     
     public Graphic(int x, int y,SneakySnakes sneakysnakes){
@@ -39,18 +35,15 @@ abstract class Graphic{
         sneakysnakes.graphicAdded();
         ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
-        hitbox=new Rectangle(0, 0, 0, 0);
     }
     
     public Graphic(int x, int y,int hitbox_X_Size,int hitbox_Y_Size,SneakySnakes sneakysnakes){
         
         this.x = x;
         this.y = y;        
-        this.hitbox=new Rectangle(x, y, hitbox_X_Size,hitbox_Y_Size);
         sneakysnakes.graphicAdded();
         ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
-        hitbox=new Rectangle(0, 0, 0, 0);
         
     }
     
@@ -68,11 +61,8 @@ abstract class Graphic{
         return x;
     }
 
-    public Rectangle getHitbox() {
-        return hitbox;
-    }
-    
     public int getID(){
         return ID;
     }
+    abstract boolean isOverlapped();
 }

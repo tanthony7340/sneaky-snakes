@@ -19,14 +19,12 @@ public class Food extends Graphic{
     private static int food_X=16;
     private static int food_Y=16;
     private final Segment segment; //will only ever be one segment, but for dispay consistency i put it in an arraylist
-    //public Rectangle hitbox;
     
     
     public Food(int x, int y, Color color, SneakySnakes sneakysnakes){
         super(x,y,sneakysnakes);        
         this.sneakysnakes=sneakysnakes;
         segment = new Segment(x, y, color, sneakysnakes);
-        this.hitbox=new Rectangle(x,y,food_X,food_Y);
     }
     
     
@@ -61,4 +59,7 @@ public class Food extends Graphic{
        return segment.toString();
     }
     
+    public boolean isOverlapped(){
+        return false;
+    }
 }

@@ -253,7 +253,6 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         graphicsList.add(cpu);
         
         System.out.println("food id="+food.getID());
-        System.out.println("food hitbox="+food.getHitbox());
         System.out.println("player id="+player.getID());
         System.out.println("cpu id=" +cpu.getID());
         
@@ -277,16 +276,11 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     {
         
         //Process the snakes segments against graphics
-        for(Graphic item:getGraphicsList()){ //Get all graphic items
+        for(Graphic item:graphicsList){ //Get all graphic items
             
-            for(Segment seg:player.getSegmentList()){ //Get the snake segments
-                if(seg.getHitbox().intersects(item.getHitbox()))//Collision?
-                {
-                    System.out.println("Collision="+item+". ID="+item.getID()+"item.getHitbox()"+item.getHitbox());
-                    System.out.println("Segment="+seg+"seg.getHitbox()"+seg.getHitbox());
-                }
-                
-            }
+            
+            if(item.isOverlapped()){graphicsList.remove(item);} //do other actions. ENUM?
+            
             
         }
     }//check col

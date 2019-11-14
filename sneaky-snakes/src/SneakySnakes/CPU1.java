@@ -23,7 +23,6 @@ public class CPU1 extends Snake{
     }
     public CPU1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
         super(x, y, color, length, sneakysnakes);
-        this.hitbox=new Rectangle(x,y,SIZE_X, SIZE_Y);
     }
     
     private int iterations = -1;
