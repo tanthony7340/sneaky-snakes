@@ -5,6 +5,7 @@
  */
 package SneakySnakes;
 
+import static SneakySnakes.Type.NA;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -24,11 +25,13 @@ abstract class Graphic{
     protected int velY;
     protected Color color;
     protected SneakySnakes sneakysnakes;
+    protected Type type;
     
     public Graphic(){
         this.x=0;
         this.y=0;
         ID=0;
+        this.type=NA;
     }
     
     public Graphic(int x, int y,SneakySnakes sneakysnakes){
@@ -38,6 +41,7 @@ abstract class Graphic{
         sneakysnakes.graphicAdded();
         ID = sneakysnakes.numObjects;
         this.sneakysnakes=sneakysnakes;
+        this.type=NA;
     }
     
     //changes state on each tick (location, direction, powerup status, etc)

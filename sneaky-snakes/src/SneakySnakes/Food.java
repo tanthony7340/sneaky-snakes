@@ -28,6 +28,7 @@ public class Food extends Graphic{
         super(x,y,sneakysnakes);        
         this.sneakysnakes=sneakysnakes;
         segment = new Segment(x, y, color, sneakysnakes);
+        this.type=Type.FOOD;
     }
     
     

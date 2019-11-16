@@ -293,15 +293,10 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                     LinkedList<Point> coordinatesNext = nextItem.getXYList();
                     
                     //Now we have each graphics' coodinates
-                    for(Point point:coordinates){
-                        //Biggest pile of poop i've ever written
-                        for(Point pointNext:coordinatesNext){
-                            if(point.equals(pointNext)){
-                                System.out.println("Collision with ID:"+
-                                        item.getID() +" and ID:"+nextItem.getID()
-                                +" at:" +point);
-                            }
-                        }
+                    Point theCollision;
+                    if((theCollision=checkPoints(coordinates, coordinatesNext))!=null){
+                        System.out.println("Collision with ID:"+
+                                        item.getID() +" and ID:"+nextItem.getID()+" at "+theCollision);
                     }
                     
                 }
@@ -309,4 +304,17 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         }//get graphic
     }//check col
           
+    
+    public Point checkPoints(LinkedList<Point> coordinates,LinkedList<Point> coordinatesNext){
+        //Now we have each graphics' coodinates
+                    for(Point point:coordinates){
+                        //Biggest pile of poop i've ever written
+                        for(Point pointNext:coordinatesNext){
+                            if(point.equals(pointNext)){
+                                return point;
+                            }
+                        }
+                    }
+                    return null;
+    }
 }
