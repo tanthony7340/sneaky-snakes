@@ -7,7 +7,9 @@ package SneakySnakes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -33,7 +35,7 @@ abstract public class Snake extends Graphic {
         }
     }
     public Snake(int x, int y, Color color, int length,SneakySnakes sneakysnakes){
-        
+        super(x, y, sneakysnakes);
         this.x=x;
         this.y=y;
         this.color=color;
@@ -68,11 +70,8 @@ abstract public class Snake extends Graphic {
                 this.x -= 1;
                 break;
         }
-        segments.addFirst(new Segment(this.x, this.y, Color.WHITE,sneakysnakes));
+        segments.addFirst(new Segment(this.x, this.y, this.color ,sneakysnakes));
         segments.removeLast();
-        
-        // OLD checkCollisions(sneakysnakes);
-        
     }
     
     //TODO
@@ -81,7 +80,7 @@ abstract public class Snake extends Graphic {
         
         //Nothing to render?
         
-        g.setColor(Color.white);
+        g.setColor(this.color);
         ListIterator<Segment> iterator = segments.listIterator();
         while(iterator.hasNext()){
             Segment next = iterator.next();
@@ -89,6 +88,7 @@ abstract public class Snake extends Graphic {
         }
     }
     
+    //We only need to check if the head has hit another segment
     @Override
     public boolean isOverlapped(){
         ListIterator<Segment> iterator = segments.listIterator();
@@ -97,9 +97,24 @@ abstract public class Snake extends Graphic {
             Segment current = iterator.next();
             if(head.x == current.x && head.y == current.y){
                 return true;
-            }        
+            }
         }
         return false;
+    }
+
+    @Override
+    public LinkedList<Point> getXYList(){
+        
+        LinkedList<Point> coordinates = new LinkedList<>(); 
+        ListIterator<Segment> iterator = segments.listIterator();
+        Segment head = iterator.next();
+        while(iterator.hasNext()){
+            Segment current = iterator.next();
+            coordinates.addFirst(new Point(current.x, current.y));
+            
+        }
+        
+        return coordinates;
     }
     
     abstract Direction algorithm();

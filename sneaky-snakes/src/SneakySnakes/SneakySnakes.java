@@ -6,10 +6,12 @@ import static java.awt.Color.black;
 import static java.awt.Color.white;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -243,18 +245,20 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(5, 5, Color.white, 5, this);
-        Food food = new Food(5, 20, Color.BLUE, this);
-        Food food2 = new Food(5, 21, Color.BLUE, this);
-        CPU1 cpu = new CPU1(6,6, Color.RED,4, this);
+        player = new Player1(5, 5, Color.GRAY, 5, this);
         graphicsList.add(player);
+        Food food = new Food(50, 50, Color.BLUE, this);  
         graphicsList.add(food);
+        Food food2 = new Food(6, 40, Color.BLUE, this);  
         graphicsList.add(food2);
+        CPU1 cpu = new CPU1(22,22, Color.RED,4, this);
         graphicsList.add(cpu);
         
-        System.out.println("food id="+food.getID());
         System.out.println("player id="+player.getID());
+        System.out.println("food id=" + food.getID() + " At:" + food.getX() + " " + food.getY());
+        System.out.println("food2 id="+food2.getID());
         System.out.println("cpu id=" +cpu.getID());
+        
         
         state=STATE.GAME;
         
@@ -272,17 +276,37 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     }
     
     
-    public void checkCollisions()
+    public void checkCollisions()//only Snakes need this?
     {
         
         //Process the snakes segments against graphics
         for(Graphic item:graphicsList){ //Get all graphic items
             
+            //Check if the Item is overlapping with itself
+            if(item.isOverlapped()){};//graphicsList.remove(item);} //do other actions. ENUM?
             
-            if(item.isOverlapped()){graphicsList.remove(item);} //do other actions. ENUM?
-            
-            
-        }
+            //Check if the item has collided with another graphics items
+            LinkedList<Point> coordinates = item.getXYList();
+            int currentID=item.getID();
+            for(Graphic nextItem:graphicsList){
+                if(currentID!=nextItem.getID()){
+                    LinkedList<Point> coordinatesNext = nextItem.getXYList();
+                    
+                    //Now we have each graphics' coodinates
+                    for(Point point:coordinates){
+                        //Biggest pile of poop i've ever written
+                        for(Point pointNext:coordinatesNext){
+                            if(point.equals(pointNext)){
+                                System.out.println("Collision with ID:"+
+                                        item.getID() +" and ID:"+nextItem.getID()
+                                +" at:" +point);
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }//get graphic
     }//check col
           
 }

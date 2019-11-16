@@ -7,8 +7,11 @@ package SneakySnakes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  *
@@ -60,6 +63,16 @@ public class Food extends Graphic{
     }
     
     public boolean isOverlapped(){
-        return false;
+        return false; //Food has only one segment
+    }
+    
+    @Override
+        
+        
+    public LinkedList<Point> getXYList(){
+        
+        LinkedList<Point> coordinates = new LinkedList<>(); 
+        coordinates.addFirst(new Point(getX(), getY()));
+        return coordinates;
     }
 }

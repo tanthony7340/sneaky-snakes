@@ -7,7 +7,10 @@ package SneakySnakes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.util.LinkedList;
 
 /**
  *
@@ -37,16 +40,6 @@ abstract class Graphic{
         this.sneakysnakes=sneakysnakes;
     }
     
-    public Graphic(int x, int y,int hitbox_X_Size,int hitbox_Y_Size,SneakySnakes sneakysnakes){
-        
-        this.x = x;
-        this.y = y;        
-        sneakysnakes.graphicAdded();
-        ID = sneakysnakes.numObjects;
-        this.sneakysnakes=sneakysnakes;
-        
-    }
-    
     //changes state on each tick (location, direction, powerup status, etc)
     public abstract void update();
     
@@ -65,4 +58,6 @@ abstract class Graphic{
         return ID;
     }
     abstract boolean isOverlapped();
+    
+    abstract LinkedList<Point> getXYList();
 }
