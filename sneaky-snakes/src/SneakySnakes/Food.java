@@ -19,18 +19,14 @@ import java.util.ListIterator;
  */
 public class Food extends Graphic{
     
-    private static int food_X=16;
-    private static int food_Y=16;
     private final Segment segment; //will only ever be one segment, but for dispay consistency i put it in an arraylist
     
-    
-    public Food(int x, int y, Color color, SneakySnakes sneakysnakes){
+    public Food(int x, int y, Color color, SneakySnakes sneakysnakes){        
         super(x,y,sneakysnakes);        
         this.sneakysnakes=sneakysnakes;
-        segment = new Segment(x, y, color, sneakysnakes);
+        segment = new Segment(super.x, super.y, color);
         this.type=Type.FOOD;
     }
-    
     
     @Override
     public void update() {}
@@ -79,5 +75,13 @@ public class Food extends Graphic{
         LinkedList<Point> coordinates = new LinkedList<>(); 
         coordinates.addFirst(new Point(getX(), getY()));
         return coordinates;
+    }
+    
+    @Override
+    public void processEvent(GraphicEvent event){
+        if(event == GraphicEvent.FOOD_EATEN){
+            this.x=(int) (Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE);
+            this.y=(int) (Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE);
+        }
     }
 }

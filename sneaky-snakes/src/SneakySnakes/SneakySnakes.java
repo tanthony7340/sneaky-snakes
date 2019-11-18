@@ -133,7 +133,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         init();
         
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 30.0; // 60 Ticks per second
+        final double amountOfTicks = 10.0; // 60 Ticks per second
         double ns = 1_000_000_000 / amountOfTicks;
         double delta = 0;
         int updates = 0;
@@ -260,18 +260,15 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(5, 5, Color.GRAY, 5, this);
+        player = new Player1(5, 5, Color.WHITE, 2, this);
         graphicsList.add(player);
-        Food food = new Food(50, 50, Color.BLUE, this);  
+        Food food = new Food(6, 49, Color.BLUE, this);  
         graphicsList.add(food);
-        Food food2 = new Food(6, 40, Color.BLUE, this);  
-        graphicsList.add(food2);
-        CPU1 cpu = new CPU1(22,22, Color.RED,4, this);
+        CPU1 cpu = new CPU1(22,22, Color.DARK_GRAY,4, this);
         graphicsList.add(cpu);
         
         System.out.println("player id="+player.getID());
         System.out.println("food id=" + food.getID() + " At:" + food.getX() + " " + food.getY());
-        System.out.println("food2 id="+food2.getID());
         System.out.println("cpu id=" +cpu.getID());
         
         
@@ -300,7 +297,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             //Check if the Item is overlapping with itself
             if(item.isOverlapped()){
                 if(item.getType()==Type.FRIEND){
-                    item.handleOverlap();
+                    //item.handleOverlap();
                     state=STATE.DEAD;
                 }
                 //graphicsList.remove(item);
@@ -320,6 +317,10 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                         if((theCollision=checkPoints(coordinates, coordinatesNext))!=null){
                             System.out.println("Collision with ID:"+
                                     item.getID() +" and ID:"+nextItem.getID()+" at "+theCollision);
+                            if(item.getType()==Type.FRIEND && nextItem.getType()==Type.FOOD){
+                                item.processEvent(GraphicEvent.SNAKE_GROW);
+                                nextItem.processEvent(GraphicEvent.FOOD_EATEN);
+                            }
                         }
                         
                     }

@@ -31,7 +31,7 @@ abstract public class Snake extends Graphic {
     
     public Snake(){
         for(int i = 0; i < 2; i++){
-            segments.add(new Segment(10 - i, 10 - i, Color.RED, sneakysnakes)); //TODO: checks to make sure we don't start snake off screen and add real values for coordinates
+            segments.add(new Segment(10 - i, 10 - i, Color.RED)); //TODO: checks to make sure we don't start snake off screen and add real values for coordinates
         }
     }
     public Snake(int x, int y, Color color, int length,SneakySnakes sneakysnakes){
@@ -42,7 +42,7 @@ abstract public class Snake extends Graphic {
         this.sneakysnakes=sneakysnakes;
         
         for(int i = 0; i < length; i++){
-            segments.add(new Segment(x - i, y, color, sneakysnakes)); //TODO: checks to make sure we don't start snake off screen
+            segments.add(new Segment(x - i, y, color)); //TODO: checks to make sure we don't start snake off screen
         }
         direction = Direction.NORTH;
     }
@@ -55,22 +55,8 @@ abstract public class Snake extends Graphic {
         
         
         
-        direction = this.algorithm();
-        switch (direction){
-            case NORTH:
-                this.y -= 1;
-                break;
-            case EAST:
-                this.x += 1;
-                break;
-            case SOUTH:
-                this.y += 1;
-                break;
-            case WEST:
-                this.x -= 1;
-                break;
-        }
-        segments.addFirst(new Segment(this.x, this.y, this.color ,sneakysnakes));
+        processDirection();
+        segments.addFirst(new Segment(this.x, this.y, this.color));
         segments.removeLast();
     }
     
@@ -145,9 +131,10 @@ abstract public class Snake extends Graphic {
         return super.getY();
     }
     
-    public void addSegment(int x, int y, Color color)
+    public void addSegment()
     {
-        segments.add(new Segment(x, y, color, sneakysnakes));
+        processDirection();
+        segments.add(new Segment(this.x, this.y, this.color));
     }
     
     public void influenceDirection(Direction directionIn){
@@ -159,4 +146,28 @@ abstract public class Snake extends Graphic {
         return segments;
     }
     
+    @Override
+    public void processEvent(GraphicEvent event){
+        if(event==GraphicEvent.SNAKE_GROW){
+            addSegment();
+        }
+    }
+    
+    public void processDirection(){
+        direction = this.algorithm();
+        switch (direction){
+            case NORTH:
+                this.y -= 1;
+                break;
+            case EAST:
+                this.x += 1;
+                break;
+            case SOUTH:
+                this.y += 1;
+                break;
+            case WEST:
+                this.x -= 1;
+                break;
+        }
+    }
 }

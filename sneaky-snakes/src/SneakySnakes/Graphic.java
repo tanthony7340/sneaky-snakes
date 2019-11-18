@@ -24,7 +24,7 @@ abstract class Graphic{
     protected int velX;
     protected int velY;
     protected Color color;
-    protected SneakySnakes sneakysnakes;
+    protected SneakySnakes sneakysnakes; //TODO Remove this and generate ID diff
     protected Type type;
     
     public Graphic(){
@@ -34,8 +34,7 @@ abstract class Graphic{
         this.type=NA;
     }
     
-    public Graphic(int x, int y,SneakySnakes sneakysnakes){
-        
+    public Graphic(int x, int y,SneakySnakes sneakysnakes){        
         this.x = x;
         this.y = y;
         sneakysnakes.graphicAdded();
@@ -55,7 +54,7 @@ abstract class Graphic{
     }
     
     public int getY(){
-        return x;
+        return y;
     }
 
     public int getID(){
@@ -71,4 +70,12 @@ abstract class Graphic{
     abstract void handleOverlap();
     
     abstract LinkedList<Point> getXYList();
+    
+    //How do I handle that the snake needs to be told to grow
+    //but not all items need to grow?
+    //I create a method called Process event and we'll pass events
+    //If it's not recognized it will defualt to do nothing
+    //And if it's recognized it will perform the action
+    
+    abstract void processEvent(GraphicEvent event);
 }
