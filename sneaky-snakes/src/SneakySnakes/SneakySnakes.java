@@ -1,10 +1,15 @@
 package SneakySnakes;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import static java.awt.Color.black;
+import static java.awt.Color.blue;
+import static java.awt.Color.gray;
+import static java.awt.Color.red;
 import static java.awt.Color.white;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -16,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -33,11 +39,12 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public static final int SCALE = 4;
     private static SneakySnakes instance;
     public Player1 player;
-    
     public int numObjects = 0;
     
     //private Menu menu;
     public final String TITLE = "Sneaky Snakes";
+    public final String GAMEOVER = "Game Over!";
+    private static JFrame frame;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -86,7 +93,8 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public static enum STATE {
         MENU,
-        GAME
+        GAME,
+        DEAD
     };
     private static STATE state = STATE.MENU;
     
@@ -102,14 +110,14 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         
         // Create Frame with 'game' canvas and size
-        JFrame frame = new JFrame(game.TITLE);
+        frame = new JFrame(game.TITLE);
         frame.add(game);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        
+
         // Game starts here
         game.start();
     }
@@ -194,14 +202,20 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     private synchronized void update()
     {
-        if(state == STATE.GAME)
-        {
-            for(Graphic graphic: graphicsList){
-                graphic.update();
-            }
-            
-            
+        switch(state){
+            case MENU:
+                break;
+            case GAME:
+                for(Graphic graphic: graphicsList){
+                    graphic.update();
+                }
+                break;
+            case DEAD:
+                break;
+            default:
+                throw new AssertionError(state.name());
         }
+        
     }
     
     /*
@@ -220,16 +234,17 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         Graphics g = bs.getDrawGraphics();
         g.setColor(black);
         g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
-        //player = new Player1(50, 50, Color.white, 2);
         
         if(state == STATE.GAME) {
-            for(Graphic graphic: graphicsList){
-                graphic.render(g);
-            }
+            gameEvent(g);
             
         }else if(state == STATE.MENU) {
             //menu.render(g);
+        }else if(state == STATE.DEAD){
+            gameEvent(g); //keep snakes on screen
+            deadEvent(g); // draw game over
         }
+        
         
         /////////// END DRAWING //////////////////
         g.dispose();
@@ -283,23 +298,32 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         for(Graphic item:graphicsList){ //Get all graphic items
             
             //Check if the Item is overlapping with itself
-            if(item.isOverlapped()){};//graphicsList.remove(item);} //do other actions. ENUM?
+            if(item.isOverlapped()){
+                if(item.getType()==Type.FRIEND){
+                    item.handleOverlap();
+                    state=STATE.DEAD;
+                }
+                //graphicsList.remove(item);
+            } //do other actions. ENUM?
             
             //Check if the item has collided with another graphics items
             LinkedList<Point> coordinates = item.getXYList();
-            int currentID=item.getID();
-            for(Graphic nextItem:graphicsList){
-                if(currentID!=nextItem.getID()){
-                    LinkedList<Point> coordinatesNext = nextItem.getXYList();
-                    
-                    //Now we have each graphics' coodinates
-                    Point theCollision;
-                    if((theCollision=checkPoints(coordinates, coordinatesNext))!=null){
-                        System.out.println("Collision with ID:"+
-                                        item.getID() +" and ID:"+nextItem.getID()+" at "+theCollision);
+            
+            
+                int currentID=item.getID();
+                for(Graphic nextItem:graphicsList){
+                    if(currentID!=nextItem.getID()){
+                        LinkedList<Point> coordinatesNext = nextItem.getXYList();
+                        
+                        //Now we have each graphics' coodinates
+                        Point theCollision;
+                        if((theCollision=checkPoints(coordinates, coordinatesNext))!=null){
+                            System.out.println("Collision with ID:"+
+                                    item.getID() +" and ID:"+nextItem.getID()+" at "+theCollision);
+                        }
+                        
                     }
-                    
-                }
+                
             }
         }//get graphic
     }//check col
@@ -316,5 +340,20 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                         }
                     }
                     return null;
+    }
+    
+    public void deadEvent(Graphics g){
+        
+        g.setColor(red);
+        Font font = g.getFont().deriveFont( 200.0f );
+        g.setFont(font);
+        g.drawString(GAMEOVER, 0, HEIGHT*SCALE/2);
+        
+    }
+    
+    public void gameEvent(Graphics g){
+        for(Graphic graphic: graphicsList){
+                graphic.render(g);
+            }
     }
 }

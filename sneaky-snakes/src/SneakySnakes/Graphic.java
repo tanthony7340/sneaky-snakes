@@ -61,7 +61,14 @@ abstract class Graphic{
     public int getID(){
         return ID;
     }
+
+    public Type getType() {
+        return type;
+    }
+    
     abstract boolean isOverlapped();
+    
+    abstract void handleOverlap();
     
     abstract LinkedList<Point> getXYList();
 }

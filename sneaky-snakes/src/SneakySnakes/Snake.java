@@ -91,29 +91,45 @@ abstract public class Snake extends Graphic {
     //We only need to check if the head has hit another segment
     @Override
     public boolean isOverlapped(){
-        ListIterator<Segment> iterator = segments.listIterator();
-        Segment head = iterator.next();
-        while(iterator.hasNext()){
-            Segment current = iterator.next();
-            if(head.x == current.x && head.y == current.y){
-                return true;
+        
+        if(!segments.isEmpty()){
+            ListIterator<Segment> iterator = segments.listIterator();
+            Segment head = iterator.next();
+            while(iterator.hasNext()){
+                Segment current = iterator.next();
+                if(head.x == current.x && head.y == current.y){
+                    return true;
+                }
             }
         }
         return false;
+    }
+    
+    
+    @Override
+    public void handleOverlap(){
+        segments.removeAll(segments);
     }
 
     @Override
     public LinkedList<Point> getXYList(){
         
-        LinkedList<Point> coordinates = new LinkedList<>(); 
-        ListIterator<Segment> iterator = segments.listIterator();
-        Segment head = iterator.next();
-        while(iterator.hasNext()){
-            Segment current = iterator.next();
-            coordinates.addFirst(new Point(current.x, current.y));
+        if(!segments.isEmpty()){
+            LinkedList<Point> coordinates = new LinkedList<>();
+            ListIterator<Segment> iterator = segments.listIterator();
+            Segment head = iterator.next();
+            while(iterator.hasNext()){
+                Segment current = iterator.next();
+                coordinates.addFirst(new Point(current.x, current.y));
+                
+            }
             
+            return coordinates;
         }
         
+        //no segments so return nothing
+        LinkedList<Point> coordinates = new LinkedList<>();
+        coordinates.addFirst(new Point(-9999, -9999));
         return coordinates;
     }
     

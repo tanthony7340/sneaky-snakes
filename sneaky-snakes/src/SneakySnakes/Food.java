@@ -63,11 +63,15 @@ public class Food extends Graphic{
        return segment.toString();
     }
     
+    @Override
     public boolean isOverlapped(){
         return false; //Food has only one segment
     }
     
     @Override
+    public void handleOverlap(){
+        
+    }
         
         
     public LinkedList<Point> getXYList(){
