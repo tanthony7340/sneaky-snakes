@@ -35,7 +35,7 @@ public class Food extends Graphic{
     @Override
     public void render(Graphics g) {
         g.setColor(segment.color);
-        g.fillRect(super.x*16, super.y*16, 16, 16);;
+        g.fillRect(super.x*16, super.y*16, 16, 16);
     }
     
     @Override
@@ -80,8 +80,8 @@ public class Food extends Graphic{
     @Override
     public void processEvent(GraphicEvent event){
         if(event == GraphicEvent.FOOD_EATEN){
-            this.x=(int) (Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE);
-            this.y=(int) (Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE);
+            this.x=(int) (Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE /16);
+            this.y=(int) (Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE/16);
         }
     }
 }

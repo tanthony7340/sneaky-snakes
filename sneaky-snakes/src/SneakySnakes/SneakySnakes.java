@@ -10,8 +10,10 @@ import static java.awt.Color.red;
 import static java.awt.Color.white;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
+import static java.awt.SystemColor.text;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
@@ -21,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import java.awt.Rectangle;
 
 /**
  *
@@ -260,7 +262,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(5, 5, Color.WHITE, 2, this);
+        player = new Player1(5, 5, Color.WHITE, 3, this);
         graphicsList.add(player);
         Food food = new Food(6, 49, Color.BLUE, this);  
         graphicsList.add(food);
@@ -300,8 +302,12 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                     //item.handleOverlap();
                     state=STATE.DEAD;
                 }
-                //graphicsList.remove(item);
-            } //do other actions. ENUM?
+            }
+            
+            //Check Wall collision
+            if(checkWallCollision(item)){
+                state=STATE.DEAD;
+            }
             
             //Check if the item has collided with another graphics items
             LinkedList<Point> coordinates = item.getXYList();
@@ -320,6 +326,9 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                             if(item.getType()==Type.FRIEND && nextItem.getType()==Type.FOOD){
                                 item.processEvent(GraphicEvent.SNAKE_GROW);
                                 nextItem.processEvent(GraphicEvent.FOOD_EATEN);
+                            }
+                            if(item.getType()==Type.FRIEND && nextItem.getType()==Type.ENEMY){
+                                state=STATE.DEAD;
                             }
                         }
                         
@@ -345,10 +354,23 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void deadEvent(Graphics g){
         
+        //Get color
         g.setColor(red);
-        Font font = g.getFont().deriveFont( 200.0f );
+        Font font = g.getFont().deriveFont( 200.0f ); //TODO set text size based on window size
+        
+        // Get the FontMetrics
+        FontMetrics metrics = g.getFontMetrics(font);
+        // Determine the X coordinate for the text
+        Rectangle rect = null;
+        int x = (WIDTH*SCALE - metrics.stringWidth(GAMEOVER)) / 2;
+        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
+        int y =((HEIGHT*SCALE - metrics.getHeight()) / 2) + metrics.getAscent();
+        // Set the font
+        //g.setFont(getFont());
+        
+        //draw
         g.setFont(font);
-        g.drawString(GAMEOVER, 0, HEIGHT*SCALE/2);
+        g.drawString(GAMEOVER, x, y);
         
     }
     
@@ -356,5 +378,31 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         for(Graphic graphic: graphicsList){
                 graphic.render(g);
             }
+    }
+    
+    public boolean checkWallCollision(Graphic item)
+    {
+        LinkedList<Point> xyList= item.getXYList();
+        
+        for(Point point:xyList){
+            //Left Wall
+            if(point.x<1){
+                return true;
+            }
+            //Right wall
+            if(point.x>WIDTH*SCALE/16){
+                return true;
+            }
+            //Bottom
+            if(point.y>HEIGHT*SCALE/16){
+                return true;
+            }
+            //Top
+            if(point.y<1){
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
