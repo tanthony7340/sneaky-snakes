@@ -50,11 +50,6 @@ abstract public class Snake extends Graphic {
     //TODO
     @Override
     public void update(){
-        
-        //collisions
-        
-        
-        
         processDirection();
         segments.addFirst(new Segment(this.x, this.y, this.color));
         segments.removeLast();

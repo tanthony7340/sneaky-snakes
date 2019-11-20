@@ -150,6 +150,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             if(delta >= 1)
             {
                 checkCollisions();
+                processCPU();
                 update(); // Calculates
                 updates++;
                 delta--;
@@ -244,7 +245,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             //menu.render(g);
         }else if(state == STATE.DEAD){
             gameEvent(g); //keep snakes on screen
-            deadEvent(g); // draw game over
+            deadEvent(g); //draw game over
         }
         
         
@@ -382,8 +383,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public boolean checkWallCollision(Graphic item)
     {
-        LinkedList<Point> xyList= item.getXYList();
-        
+        LinkedList<Point> xyList= item.getXYList();        
         for(Point point:xyList){
             //Left Wall
             if(point.x<1){
@@ -401,8 +401,40 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             if(point.y<1){
                 return true;
             }
+        }        
+        return false;
+    }
+    
+    public void processCPU(){
+        
+        ArrayList<Graphic> enemyList = new ArrayList<>();
+        ArrayList<Point> foodLocations = new ArrayList<>();
+        ArrayList<Point> friendLocations = new ArrayList<>();
+        
+        for(Graphic item:graphicsList){ //Get all graphic items
+            
+            //Record Enemies
+            if(item.getType()==Type.ENEMY){
+                enemyList.add(item);
+            }
+            
+            //Record food location                
+            if(item.getType()==Type.FOOD){
+                foodLocations.add(new Point(item.x,item.y));
+            }
+            
+            //Record Snake locations   
+            if(item.getType()==Type.FRIEND){
+                friendLocations.add(new Point(item.x,item.y));                
+            }
+            
         }
         
-        return false;
+        //Give food location to enemies
+        
+        //Give snake locations to enemies
+        
+        //Tell enemies to perform algorithm
+            //Does this in update()
     }
 }
