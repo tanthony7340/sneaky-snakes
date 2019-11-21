@@ -80,6 +80,7 @@ abstract public class Snake extends Graphic {
             while(iterator.hasNext()){
                 Segment current = iterator.next();
                 if(head.x == current.x && head.y == current.y){
+                    System.out.println("Self Overlap id="+getID());
                     return true;
                 }
             }
@@ -175,7 +176,11 @@ abstract public class Snake extends Graphic {
     }
     
     public void loadObstacle(ArrayList<Point> list){
-        this.snakeList=list;        
+        this.snakeList=list;
+        for(Segment item:segments){
+            
+            snakeList.add(new Point(item.x,item.y));
+        }
     }
     
     public void loadFood(ArrayList<Point> list){

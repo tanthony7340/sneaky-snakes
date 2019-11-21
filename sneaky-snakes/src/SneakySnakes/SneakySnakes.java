@@ -33,6 +33,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
    
     //contains 
     volatile ArrayList<Graphic> graphicsList = new ArrayList<>(); //changed name from graphics to graphicsList to avoid naming conflicts
+    volatile ArrayList<Graphic> removeList = new ArrayList<>();
     
     private boolean running = false;
     private Thread thread;
@@ -151,6 +152,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             {
                 checkCollisions();
                 processCPU();
+                deleteCPUs();
                 update(); // Calculates
                 updates++;
                 delta--;
@@ -320,6 +322,8 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                 if(item.getType()==Type.ENEMY){
                     System.out.println("Enemy overlap ID:"+item.getID()+" x="+item.x+" y="+item.y);
                     //item.handleOverlap();
+                    //removeList.add(item);
+                    //continue;
                 }
             }
             
@@ -349,15 +353,20 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                             if((item.getType()==Type.FRIEND || item.getType()==Type.ENEMY) && nextItem.getType()==Type.FOOD){
                                 item.processEvent(GraphicEvent.SNAKE_GROW);
                                 nextItem.processEvent(GraphicEvent.FOOD_EATEN);
+                                continue;
                             }
                             if(item.getType()==Type.FRIEND && nextItem.getType()==Type.ENEMY){
                                 state=STATE.DEAD;
+                                continue;
                             }
                             if(item.getType()==Type.ENEMY && nextItem.getType()==Type.ENEMY){
                                 System.out.println("Collision with ID:"+
                                     item.getID() +" and ID:"+nextItem.getID()+" at "+theCollision);
                                 item.processEvent(GraphicEvent.COLLISION);
+                                removeList.add(item);
                                 nextItem.processEvent(GraphicEvent.COLLISION);
+                                removeList.add(nextItem);
+                                continue;
                             }
                         }
                         
@@ -479,5 +488,13 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         for(Graphic item:foodList){
             item.loadObstacle(foodLocations);
         }
+    }
+    
+    public void deleteCPUs(){
+        for(Graphic item:removeList){
+            graphicsList.remove(item);
+        }
+        
+        removeList.removeAll(removeList);
     }
 }

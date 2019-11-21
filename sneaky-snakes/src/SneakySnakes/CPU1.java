@@ -37,43 +37,7 @@ public class CPU1 extends Snake{
     @Override
     Direction algorithm() {
         
-        Direction direction;
-        
-        //Check side of the snake
-        checkSides();
-        
-        //Figure out direction
-        if(!foodList.isEmpty()){
-            if(!eastObstacle||!northObstacle||!southObstacle||!westObstacle){
-                Point target=foodList.get(0); //only the first food
-                
-                direction = getIdealDirection(target);
-                
-                //
-                for(int i = 0;i<3;i++){
-                    if(direction==Direction.EAST && eastObstacle){
-                        direction=Direction.NORTH;
-                    }
-                    if(direction==Direction.NORTH && northObstacle){
-                        direction=Direction.WEST;
-                    }
-                    if(direction==Direction.WEST && westObstacle){
-                        direction=Direction.SOUTH;
-                    }
-                    if(direction==Direction.SOUTH && southObstacle){
-                        direction=Direction.EAST;
-                    }
-                }
-                
-                return direction;
-            }
-            return Direction.SOUTH;
-        }
-        //We don't have food to get, go int  circles regardless of obstacles
-        else {
-            return circleMode(10);
-        }
-        
+        return easyMode();
         
     }
     
@@ -171,6 +135,44 @@ public class CPU1 extends Snake{
             
         }
         return direction;
+    }
+    
+    public Direction easyMode(){
+        Direction direction;
+        
+        //Check side of the snake
+        checkSides();
+        
+        //Figure out direction
+        if(!foodList.isEmpty()){
+            Point target=foodList.get(0); //only the first food
+            direction = getIdealDirection(target);
+            if(!eastObstacle||!northObstacle||!southObstacle||!westObstacle){
+                //
+                for(int i = 0;i<=3;i++){
+                    if(direction==Direction.EAST && eastObstacle){
+                        direction=Direction.NORTH;
+                    }
+                    if(direction==Direction.NORTH && northObstacle){
+                        direction=Direction.WEST;
+                    }
+                    if(direction==Direction.WEST && westObstacle){
+                        direction=Direction.SOUTH;
+                    }
+                    if(direction==Direction.SOUTH && southObstacle){
+                        direction=Direction.EAST;
+                    }
+                }
+                
+                return direction;
+            }
+            return direction;
+        }
+        //We don't have food to get, go int  circles regardless of obstacles
+        else {
+            return circleMode(10);
+        }
+        
     }
     
 }
