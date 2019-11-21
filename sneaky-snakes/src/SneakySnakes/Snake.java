@@ -8,8 +8,6 @@ package SneakySnakes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -29,6 +27,7 @@ abstract public class Snake extends Graphic {
     protected ArrayList<Point> foodList;
     protected ArrayList<Point> snakeList;
     protected Direction direction = Direction.NORTH;
+    private int score = 0;
     
     public Snake(){
         for(int i = 0; i < 2; i++){
@@ -140,7 +139,20 @@ abstract public class Snake extends Graphic {
     }
     
     public void influenceDirection(Direction directionIn){
-        this.direction=directionIn;
+        switch (direction){
+            case NORTH:
+                if(directionIn != Direction.SOUTH) this.direction=directionIn;
+                break;
+            case EAST:
+                if(directionIn != Direction.WEST) this.direction=directionIn;
+                break;
+            case SOUTH:
+                if(directionIn != Direction.NORTH) this.direction=directionIn;
+                break;
+            case WEST:
+                if(directionIn != Direction.EAST) this.direction=directionIn;
+                break;
+        }
     }
     
     public LinkedList<Segment> getSegmentList()
@@ -152,6 +164,7 @@ abstract public class Snake extends Graphic {
     public void processEvent(GraphicEvent event){
         if(event==GraphicEvent.SNAKE_GROW){
             addSegment();
+            score++;
         }
         if(event==GraphicEvent.COLLISION)
             segments.removeAll(segments);
@@ -185,5 +198,9 @@ abstract public class Snake extends Graphic {
     
     public void loadFood(ArrayList<Point> list){
         this.foodList=list;
+    }
+    
+    public int getScore(){
+        return score;
     }
 }

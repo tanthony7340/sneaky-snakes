@@ -1,27 +1,20 @@
 package SneakySnakes;
 
-import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import static java.awt.Color.black;
-import static java.awt.Color.blue;
-import static java.awt.Color.gray;
 import static java.awt.Color.red;
-import static java.awt.Color.white;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
-import static java.awt.SystemColor.text;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import java.awt.Rectangle;
 
@@ -50,13 +43,10 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     private static JFrame frame;
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //System.out.println("Key Pressed="+e.getKeyCode());
         switch(e.getKeyCode()){
             case 37:
                 player.influenceDirection(Direction.WEST);
@@ -366,7 +356,6 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                                 removeList.add(item);
                                 nextItem.processEvent(GraphicEvent.COLLISION);
                                 removeList.add(nextItem);
-                                continue;
                             }
                         }
                         
@@ -409,6 +398,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         //draw
         g.setFont(font);
         g.drawString(GAMEOVER, x, y);
+        g.drawString("Score:" + player.getScore(), x + 150, y + 200);
         
     }
     
