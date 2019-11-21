@@ -167,7 +167,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             
             if(System.currentTimeMillis() - timer > 1000){ // Waits
                 timer += 1000;
-                System.out.println(updates + " Ticks, Fps " + frames);
+                //System.out.println(updates + " Ticks, Fps " + frames);
                 updates = 0;
                 frames = 0;
             }
@@ -267,12 +267,26 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         graphicsList.add(player);
         Food food = new Food(6, 49, Color.BLUE, this);  
         graphicsList.add(food);
-        CPU1 cpu = new CPU1(22,22, Color.DARK_GRAY,4, this);
-        graphicsList.add(cpu);
+        
+        
+               //CPUs
+        CPU1 cpu1 = new CPU1(8,1, Color.DARK_GRAY,3, this);
+        graphicsList.add(cpu1);
+        CPU1 cpu2 = new CPU1(10,1, Color.DARK_GRAY,2, this);
+        graphicsList.add(cpu2);
+        CPU1 cpu3 = new CPU1(15,7, Color.DARK_GRAY,2, this);
+        graphicsList.add(cpu3);
+        CPU1 cpu4 = new CPU1(20,22, Color.DARK_GRAY,2, this);
+        graphicsList.add(cpu4);
+        CPU1 cpu5 = new CPU1(25,1, Color.DARK_GRAY,2, this);
+        graphicsList.add(cpu5);
+        CPU1 cpu6 = new CPU1(30,50, Color.DARK_GRAY,2, this);
+        graphicsList.add(cpu6);
+        
         
         System.out.println("player id="+player.getID());
         System.out.println("food id=" + food.getID() + " At:" + food.getX() + " " + food.getY());
-        System.out.println("cpu id=" +cpu.getID());
+        System.out.println("cpu id=" +cpu1.getID());
         
         
         state=STATE.GAME;
@@ -300,14 +314,23 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             //Check if the Item is overlapping with itself
             if(item.isOverlapped()){
                 if(item.getType()==Type.FRIEND){
-                    //item.handleOverlap();
+                    item.handleOverlap();
                     state=STATE.DEAD;
+                }
+                if(item.getType()==Type.ENEMY){
+                    System.out.println("Enemy overlap ID:"+item.getID()+" x="+item.x+" y="+item.y);
+                    //item.handleOverlap();
                 }
             }
             
             //Check Wall collision
-            if(checkWallCollision(item)){
+            if(checkWallCollision(item) && item.getType()==Type.FRIEND){
                 state=STATE.DEAD;
+            }
+            
+            //Check Wall collision
+            if(checkWallCollision(item) && item.getType()==Type.ENEMY){
+                item.processEvent(GraphicEvent.COLLISION);
             }
             
             //Check if the item has collided with another graphics items
@@ -322,14 +345,19 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                         //Now we have each graphics' coodinates
                         Point theCollision;
                         if((theCollision=checkPoints(coordinates, coordinatesNext))!=null){
-                            System.out.println("Collision with ID:"+
-                                    item.getID() +" and ID:"+nextItem.getID()+" at "+theCollision);
-                            if(item.getType()==Type.FRIEND && nextItem.getType()==Type.FOOD){
+                            
+                            if((item.getType()==Type.FRIEND || item.getType()==Type.ENEMY) && nextItem.getType()==Type.FOOD){
                                 item.processEvent(GraphicEvent.SNAKE_GROW);
                                 nextItem.processEvent(GraphicEvent.FOOD_EATEN);
                             }
                             if(item.getType()==Type.FRIEND && nextItem.getType()==Type.ENEMY){
                                 state=STATE.DEAD;
+                            }
+                            if(item.getType()==Type.ENEMY && nextItem.getType()==Type.ENEMY){
+                                System.out.println("Collision with ID:"+
+                                    item.getID() +" and ID:"+nextItem.getID()+" at "+theCollision);
+                                item.processEvent(GraphicEvent.COLLISION);
+                                nextItem.processEvent(GraphicEvent.COLLISION);
                             }
                         }
                         
@@ -408,33 +436,48 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public void processCPU(){
         
         ArrayList<Graphic> enemyList = new ArrayList<>();
+        ArrayList<Graphic> foodList = new ArrayList<>();
         ArrayList<Point> foodLocations = new ArrayList<>();
-        ArrayList<Point> friendLocations = new ArrayList<>();
+        ArrayList<Point> snakeLocations = new ArrayList<>();
         
         for(Graphic item:graphicsList){ //Get all graphic items
             
-            //Record Enemies
+            //Record Enemies and their locations
             if(item.getType()==Type.ENEMY){
                 enemyList.add(item);
+                snakeLocations.add(new Point(item.x,item.y));
             }
             
-            //Record food location                
+            //Record food and their locations
             if(item.getType()==Type.FOOD){
+                foodList.add(item);
                 foodLocations.add(new Point(item.x,item.y));
             }
             
-            //Record Snake locations   
+            //Record friend locations   
             if(item.getType()==Type.FRIEND){
-                friendLocations.add(new Point(item.x,item.y));                
+                snakeLocations.add(new Point(item.x,item.y));                
             }
             
         }
         
         //Give food location to enemies
+        for(Graphic item:enemyList){
+            item.loadFood(foodLocations);
+        }
         
         //Give snake locations to enemies
+        for(Graphic item:enemyList){
+            item.loadObstacle(snakeLocations);
+        }
+        //Give food location to food
+        for(Graphic item:foodList){
+            item.loadFood(foodLocations);
+        }
         
-        //Tell enemies to perform algorithm
-            //Does this in update()
+        //Give snake locations to food
+        for(Graphic item:foodList){
+            item.loadObstacle(foodLocations);
+        }
     }
 }

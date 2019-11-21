@@ -8,6 +8,7 @@ package SneakySnakes;
 import static SneakySnakes.Snake.SIZE_X;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,7 +18,13 @@ import java.util.LinkedList;
  * @author tommy
  */
 public class CPU1 extends Snake{
-
+    
+    //
+    boolean westObstacle;
+    boolean eastObstacle;
+    boolean northObstacle;
+    boolean southObstacle;
+    
     public CPU1(){
         super();
     }
@@ -29,8 +36,50 @@ public class CPU1 extends Snake{
     private int iterations = -1;
     @Override
     Direction algorithm() {
+        
+        Direction direction;
+        
+        //Check side of the snake
+        checkSides();
+        
+        //Figure out direction
+        if(!foodList.isEmpty()){
+            if(!eastObstacle||!northObstacle||!southObstacle||!westObstacle){
+                Point target=foodList.get(0); //only the first food
+                
+                direction = getIdealDirection(target);
+                
+                //
+                for(int i = 0;i<3;i++){
+                    if(direction==Direction.EAST && eastObstacle){
+                        direction=Direction.NORTH;
+                    }
+                    if(direction==Direction.NORTH && northObstacle){
+                        direction=Direction.WEST;
+                    }
+                    if(direction==Direction.WEST && westObstacle){
+                        direction=Direction.SOUTH;
+                    }
+                    if(direction==Direction.SOUTH && southObstacle){
+                        direction=Direction.EAST;
+                    }
+                }
+                
+                return direction;
+            }
+            return Direction.SOUTH;
+        }
+        //We don't have food to get, go int  circles regardless of obstacles
+        else {
+            return circleMode(10);
+        }
+        
+        
+    }
+    
+    private Direction circleMode(int circleSize){
         iterations++;
-        if(iterations % 10 == 0){
+        if(iterations % circleSize == 0){
         
             switch(super.direction){
                 case NORTH:
@@ -45,7 +94,6 @@ public class CPU1 extends Snake{
         }
         return super.direction;
     }
-    
     
     @Override
     public int getX(){
@@ -70,4 +118,59 @@ public class CPU1 extends Snake{
     public void render(Graphics g) {
         super.render(g);
     }
+    
+    public boolean checkSides(){
+        eastObstacle=false;
+        westObstacle=false;
+        northObstacle=false;
+        southObstacle=false;
+        Point meWest = new Point(this.x-1,this.y);
+        Point meEast = new Point(this.x+1,this.y);
+        Point meNorth = new Point(this.x,this.y-1);
+        Point meSouth = new Point(this.x-1,this.y+1);
+        
+        for(Point snake:snakeList){
+            if(meWest.equals(snake)){
+                westObstacle=true;
+            }
+            if(meEast.equals(snake)){
+                eastObstacle=true;
+            }
+            if(meNorth.equals(snake)){
+                northObstacle=true;
+            }
+            if(meSouth.equals(snake)){
+                southObstacle=true;
+            }
+        }        
+        return false;
+    }
+    
+    public Direction getIdealDirection(Point target){
+        
+        int xDist = target.x-this.x;
+        int yDist = target.y-this.y;
+        
+        //if x direction is bigger go that way
+        if(Math.abs(xDist)>Math.abs(yDist)){
+            if(xDist<0){
+                direction=Direction.WEST;
+            }
+            else{
+                direction=Direction.EAST;
+            }
+        }
+        else{
+            if(yDist<0){
+                direction=Direction.NORTH;
+            }
+            else{
+                direction=Direction.SOUTH;
+            }
+            
+            
+        }
+        return direction;
+    }
+    
 }

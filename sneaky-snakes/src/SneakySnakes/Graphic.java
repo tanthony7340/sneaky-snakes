@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -78,4 +79,8 @@ abstract class Graphic{
     //And if it's recognized it will perform the action
     
     abstract void processEvent(GraphicEvent event);
+    
+    abstract void loadObstacle(ArrayList<Point> list);
+    
+    abstract void loadFood(ArrayList<Point> list);
 }

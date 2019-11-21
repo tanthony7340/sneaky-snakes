@@ -20,6 +20,8 @@ import java.util.ListIterator;
 public class Food extends Graphic{
     
     private final Segment segment; //will only ever be one segment, but for dispay consistency i put it in an arraylist
+    protected ArrayList<Point> foodList;
+    protected ArrayList<Point> snakeList;
     
     public Food(int x, int y, Color color, SneakySnakes sneakysnakes){        
         super(x,y,sneakysnakes);        
@@ -83,5 +85,13 @@ public class Food extends Graphic{
             this.x=(int) (Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE /16);
             this.y=(int) (Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE/16);
         }
+    }
+    
+    public void loadObstacle(ArrayList<Point> list){
+        this.snakeList=list;        
+    }
+    
+    public void loadFood(ArrayList<Point> list){
+        this.foodList=list; 
     }
 }

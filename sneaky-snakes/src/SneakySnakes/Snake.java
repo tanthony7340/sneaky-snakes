@@ -25,9 +25,10 @@ abstract public class Snake extends Graphic {
     static final int SIZE_Y=16;
     static final int SIZE_X=16;;
     
-    LinkedList<Segment> segments = new LinkedList<>(); 
-
-    Direction direction = Direction.NORTH;
+    protected LinkedList<Segment> segments = new LinkedList<>();
+    protected ArrayList<Point> foodList;
+    protected ArrayList<Point> snakeList;
+    protected Direction direction = Direction.NORTH;
     
     public Snake(){
         for(int i = 0; i < 2; i++){
@@ -89,7 +90,12 @@ abstract public class Snake extends Graphic {
     
     @Override
     public void handleOverlap(){
-        segments.removeAll(segments);
+        if(type==Type.ENEMY){
+            processEvent(GraphicEvent.COLLISION);
+        }
+        if(type==Type.FRIEND){
+            //Do nothing for now. This keeps the snakes on the screen
+        }
     }
 
     @Override
@@ -146,6 +152,8 @@ abstract public class Snake extends Graphic {
         if(event==GraphicEvent.SNAKE_GROW){
             addSegment();
         }
+        if(event==GraphicEvent.COLLISION)
+            segments.removeAll(segments);
     }
     
     public void processDirection(){
@@ -164,5 +172,13 @@ abstract public class Snake extends Graphic {
                 this.x -= 1;
                 break;
         }
+    }
+    
+    public void loadObstacle(ArrayList<Point> list){
+        this.snakeList=list;        
+    }
+    
+    public void loadFood(ArrayList<Point> list){
+        this.foodList=list;
     }
 }

@@ -11,5 +11,6 @@ package SneakySnakes;
  */
 public enum GraphicEvent {
     SNAKE_GROW,
-    FOOD_EATEN
+    FOOD_EATEN,
+    COLLISION
 }
