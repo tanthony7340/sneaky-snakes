@@ -36,6 +36,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     private static SneakySnakes instance;
     public Player1 player;
     public int numObjects = 0;
+    public boolean influenced = false; //need better solution if we ever have more than one player
     
     //private Menu menu;
     public final String TITLE = "Sneaky Snakes";
@@ -47,7 +48,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch(e.getKeyCode()){
+        if(!influenced) switch(e.getKeyCode()){
             case 37:
                 player.influenceDirection(Direction.WEST);
                 break;
@@ -76,6 +77,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                 break;
                             
         }
+        influenced=true;
 
     }
 
@@ -204,6 +206,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                 for(Graphic graphic: graphicsList){
                     graphic.update();
                 }
+                influenced=false;
                 break;
             case DEAD:
                 break;
