@@ -28,6 +28,7 @@ abstract public class Snake extends Graphic {
     protected ArrayList<Point> snakeList;
     protected Direction direction = Direction.NORTH;
     private int score = 0;
+    private boolean eaten = false;
     
     public Snake(){
         for(int i = 0; i < 2; i++){
@@ -52,7 +53,8 @@ abstract public class Snake extends Graphic {
     public void update(){
         processDirection();
         segments.addFirst(new Segment(this.x, this.y, this.color));
-        segments.removeLast();
+        if(!eaten) segments.removeLast();
+        eaten=false;
     }
     
     //TODO
@@ -134,8 +136,9 @@ abstract public class Snake extends Graphic {
     
     public void addSegment()
     {
-        processDirection();
-        segments.add(new Segment(this.x, this.y, this.color));
+        eaten=true;
+        //processDirection();
+        //segments.add(new Segment(this.x, this.y, this.color));
     }
     
     public void influenceDirection(Direction directionIn){

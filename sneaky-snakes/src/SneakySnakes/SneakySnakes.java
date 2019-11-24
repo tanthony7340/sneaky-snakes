@@ -142,8 +142,8 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             lastTime = now;
             if(delta >= 1)
             {
-                checkCollisions();
                 processCPU();
+                checkCollisions();
                 deleteCPUs();
                 update(); // Calculates
                 updates++;
@@ -258,7 +258,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     public void init() {
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(5, 5, Color.WHITE, 3, this);
+        player = new Player1(20, 40, Color.WHITE, 15, this);
         graphicsList.add(player);
         Food food = new Food(6, 49, Color.BLUE, this);  
         graphicsList.add(food);
@@ -279,9 +279,9 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         graphicsList.add(cpu6);
         
         
-        System.out.println("player id="+player.getID());
-        System.out.println("food id=" + food.getID() + " At:" + food.getX() + " " + food.getY());
-        System.out.println("cpu id=" +cpu1.getID());
+        //System.out.println("player id="+player.getID());
+        //System.out.println("food id=" + food.getID() + " At:" + food.getX() + " " + food.getY());
+        //System.out.println("cpu id=" +cpu1.getID());
         
         
         state=STATE.GAME;
@@ -346,15 +346,15 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                             if((item.getType()==Type.FRIEND || item.getType()==Type.ENEMY) && nextItem.getType()==Type.FOOD){
                                 item.processEvent(GraphicEvent.SNAKE_GROW);
                                 nextItem.processEvent(GraphicEvent.FOOD_EATEN);
-                                continue;
                             }
-                            if(item.getType()==Type.FRIEND && nextItem.getType()==Type.ENEMY){
+                            if(item.getType()==Type.FRIEND && nextItem.getType()==Type.ENEMY  && coordinates.getLast().equals(theCollision)){
                                 state=STATE.DEAD;
-                                continue;
+                            }
+                            if(item.getType()==Type.ENEMY && nextItem.getType()==Type.FRIEND  && coordinates.getLast().equals(theCollision)){
+                                item.processEvent(GraphicEvent.COLLISION);
+                                removeList.add(item);
                             }
                             if(item.getType()==Type.ENEMY && nextItem.getType()==Type.ENEMY){
-                                System.out.println("Collision with ID:"+
-                                    item.getID() +" and ID:"+nextItem.getID()+" at "+theCollision);
                                 item.processEvent(GraphicEvent.COLLISION);
                                 removeList.add(item);
                                 nextItem.processEvent(GraphicEvent.COLLISION);
@@ -416,19 +416,19 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         LinkedList<Point> xyList= item.getXYList();        
         for(Point point:xyList){
             //Left Wall
-            if(point.x<1){
+            if(point.x<0){
                 return true;
             }
             //Right wall
-            if(point.x>WIDTH*SCALE/16){
+            if(point.x>(WIDTH-1)*SCALE/16){
                 return true;
             }
             //Bottom
-            if(point.y>HEIGHT*SCALE/16){
+            if(point.y>(HEIGHT-1)*SCALE/16){
                 return true;
             }
             //Top
-            if(point.y<1){
+            if(point.y<0){
                 return true;
             }
         }        
