@@ -23,10 +23,10 @@ public class Food extends Graphic{
     protected ArrayList<Point> foodList;
     protected ArrayList<Point> snakeList;
     
-    public Food(int x, int y, Color color, SneakySnakes sneakysnakes){        
+    public Food(int x, int y, Color color, SneakySnakes sneakysnakes, Direction d){        
         super(x,y,sneakysnakes);        
         this.sneakysnakes=sneakysnakes;
-        segment = new Segment(super.x, super.y, color);
+        segment = new Segment(super.x, super.y, color,d);
         this.type=Type.FOOD;
     }
     

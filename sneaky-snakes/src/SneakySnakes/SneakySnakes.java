@@ -263,7 +263,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         requestFocus(); // So the game gains focus just at starting point.
 //        player = new Player1(20, 40, Color.WHITE, 15, this);
 //        graphicsList.add(player);
-        Food food = new Food(6, 49, Color.BLUE, this);  
+        Food food = new Food(6, 49, Color.BLUE, this, Direction.NORTH);  
         graphicsList.add(food);
         
         

@@ -31,11 +31,7 @@ public class Animation {
                 spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet.png"));
                 
                 // The image is 320 by 256 with 5 by 4 frames.
-                System.out.println("h"+spriteSheet.getHeight());
-                System.out.println("w"+spriteSheet.getWidth());
                 resizedSpriteSheet = resize(spriteSheet,320/4,256/4);
-                System.out.println("h"+resizedSpriteSheet.getHeight());
-                System.out.println("w"+resizedSpriteSheet.getWidth());
     
         } catch (IOException e) {}
             

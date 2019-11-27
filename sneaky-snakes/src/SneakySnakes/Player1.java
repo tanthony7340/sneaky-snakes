@@ -13,9 +13,6 @@ import java.awt.Graphics;
  * @author 10160106
  */
 public class Player1 extends Snake{
-    public Player1(){
-        super();
-    }
     public Player1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
         super(x, y, color, length, sneakysnakes);
         this.direction=Direction.SOUTH;

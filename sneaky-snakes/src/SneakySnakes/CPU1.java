@@ -25,9 +25,7 @@ public class CPU1 extends Snake{
     boolean northObstacle;
     boolean southObstacle;
     
-    public CPU1(){
-        super();
-    }
+  
     public CPU1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
         super(x, y, color, length, sneakysnakes);
         this.type=Type.ENEMY;

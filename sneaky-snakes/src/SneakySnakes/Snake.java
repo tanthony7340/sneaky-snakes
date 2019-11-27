@@ -33,29 +33,32 @@ abstract public class Snake extends Graphic {
     private boolean eaten = false;
     public Animation anim = new Animation();
     
-    public Snake(){
-        for(int i = 0; i < 2; i++){
-            segments.add(new Segment(10 - i, 10 - i, Color.RED)); //TODO: checks to make sure we don't start snake off screen and add real values for coordinates
-        }
-    }
+    
     public Snake(int x, int y, Color color, int length,SneakySnakes sneakysnakes){
         super(x, y, sneakysnakes);
         this.x=x;
         this.y=y;
         this.color=color;
         this.sneakysnakes=sneakysnakes;
+        direction = Direction.NORTH;
         
         for(int i = 0; i < length; i++){
-            segments.add(new Segment(x - i, y, color)); //TODO: checks to make sure we don't start snake off screen
+            segments.add(new Segment(x - i, y, color,direction)); //TODO: checks to make sure we don't start snake off screen
         }
-        direction = Direction.NORTH;
+        
     }
     
     //TODO
     @Override
     public void update(){
         processDirection();
-        segments.addFirst(new Segment(this.x, this.y, this.color));
+        
+        //we know direction
+        segments.addFirst(new Segment(this.x, this.y, this.color, this.direction));
+        if(segments.size()>1)
+        {
+            //segments[1].
+        }
         if(!eaten) segments.removeLast();
         eaten=false;
     }
