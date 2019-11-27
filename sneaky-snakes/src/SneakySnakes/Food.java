@@ -82,8 +82,8 @@ public class Food extends Graphic{
     @Override
     public void processEvent(GraphicEvent event){
         if(event == GraphicEvent.FOOD_EATEN){
-            this.x=(int) (Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE /16);
-            this.y=(int) (Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE/16);
+            this.x=(int) Math.round(Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE /16 - 1);
+            this.y=(int) Math.round(Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE/16 - 1);
         }
     }
     

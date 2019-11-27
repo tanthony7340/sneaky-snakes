@@ -128,7 +128,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         init();
         
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 10.0; // 60 Ticks per second
+        final double amountOfTicks = 20.0; // 60 Ticks per second
         double ns = 1_000_000_000 / amountOfTicks;
         double delta = 0;
         int updates = 0;
@@ -141,7 +141,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             delta += (now - lastTime) / ns;
             lastTime = now;
             if(delta >= 1)
-            {
+            { 
                 processCPU();
                 checkCollisions();
                 deleteCPUs();
@@ -257,26 +257,29 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     
     public void init() {
+        
+        System.out.println("WIDTH:"+(SneakySnakes.WIDTH * SneakySnakes.SCALE /16));
+        System.out.println("HEIGHT:"+(SneakySnakes.HEIGHT * SneakySnakes.SCALE /16));
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(20, 40, Color.WHITE, 15, this);
-        graphicsList.add(player);
+//        player = new Player1(20, 40, Color.WHITE, 15, this);
+//        graphicsList.add(player);
         Food food = new Food(6, 49, Color.BLUE, this);  
         graphicsList.add(food);
         
         
                //CPUs
-        CPU1 cpu1 = new CPU1(8,1, Color.DARK_GRAY,3, this);
+        CPU1 cpu1 = new CPU1(8,1, Color.DARK_GRAY,6, this);
         graphicsList.add(cpu1);
-        CPU1 cpu2 = new CPU1(10,1, Color.DARK_GRAY,2, this);
-        graphicsList.add(cpu2);
-        CPU1 cpu3 = new CPU1(15,7, Color.DARK_GRAY,2, this);
-        graphicsList.add(cpu3);
-        CPU1 cpu4 = new CPU1(20,22, Color.DARK_GRAY,2, this);
-        graphicsList.add(cpu4);
-        CPU1 cpu5 = new CPU1(25,1, Color.DARK_GRAY,2, this);
-        graphicsList.add(cpu5);
-        CPU1 cpu6 = new CPU1(30,50, Color.DARK_GRAY,2, this);
-        graphicsList.add(cpu6);
+//        CPU1 cpu2 = new CPU1(10,1, Color.DARK_GRAY,2, this);
+//        graphicsList.add(cpu2);
+//        CPU1 cpu3 = new CPU1(15,7, Color.DARK_GRAY,2, this);
+//        graphicsList.add(cpu3);
+//        CPU1 cpu4 = new CPU1(20,22, Color.DARK_GRAY,2, this);
+//        graphicsList.add(cpu4);
+//        CPU1 cpu5 = new CPU1(25,1, Color.DARK_GRAY,2, this);
+//        graphicsList.add(cpu5);
+//        CPU1 cpu6 = new CPU1(30,50, Color.DARK_GRAY,2, this);
+//        graphicsList.add(cpu6);
         
         
         //System.out.println("player id="+player.getID());
@@ -314,7 +317,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                 }
                 if(item.getType()==Type.ENEMY){
                     System.out.println("Enemy overlap ID:"+item.getID()+" x="+item.x+" y="+item.y);
-                    //item.handleOverlap();
+                    item.handleOverlap();
                     //removeList.add(item);
                     //continue;
                 }

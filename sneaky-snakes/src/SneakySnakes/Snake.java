@@ -7,10 +7,12 @@ package SneakySnakes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -29,6 +31,7 @@ abstract public class Snake extends Graphic {
     protected Direction direction = Direction.NORTH;
     private int score = 0;
     private boolean eaten = false;
+    public Animation anim = new Animation();
     
     public Snake(){
         for(int i = 0; i < 2; i++){
@@ -60,15 +63,20 @@ abstract public class Snake extends Graphic {
     //TODO
     @Override
     public void render(Graphics g) {
+//        g.setColor(this.color);
+//        ListIterator<Segment> iterator = segments.listIterator();
+//        while(iterator.hasNext()){
+//            Segment next = iterator.next();
+//            g.fillRect(next.x*SIZE_X, next.y*SIZE_Y, SIZE_X, SIZE_Y);
+//        }
         
-        //Nothing to render?
         
-        g.setColor(this.color);
-        ListIterator<Segment> iterator = segments.listIterator();
+         ListIterator<Segment> iterator = segments.listIterator();
         while(iterator.hasNext()){
             Segment next = iterator.next();
-            g.fillRect(next.x*SIZE_X, next.y*SIZE_Y, SIZE_X, SIZE_Y);
+            anim.drawAnimation(g, next.x*SIZE_X, next.y*SIZE_Y, 0);
         }
+        
     }
     
     //We only need to check if the head has hit another segment
