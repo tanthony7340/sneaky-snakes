@@ -30,7 +30,7 @@ abstract public class Snake extends Graphic {
     private int score = 0;
     private boolean eaten = false;
     public Animation anim = new Animation();
-    
+    public Animation animEnemy = new Animation(Type.ENEMY);
     
     public Snake(int x, int y, Color color, int length,SneakySnakes sneakysnakes){
         super(x, y, sneakysnakes);
@@ -78,7 +78,12 @@ abstract public class Snake extends Graphic {
          ListIterator<Segment> iterator = segments.listIterator();
         while(iterator.hasNext()){
             Segment next = iterator.next();
-            anim.drawAnimation(g, next.x*SIZE_X, next.y*SIZE_Y, 0, next.frameX, next.frameY);
+            if(type==Type.FRIEND){
+                anim.drawAnimation(g, next.x*SIZE_X, next.y*SIZE_Y, 0, next.frameX, next.frameY);
+            }
+            else{
+                animEnemy.drawAnimation(g, next.x*SIZE_X, next.y*SIZE_Y, 0, next.frameX, next.frameY);
+            }
         }
         
     }

@@ -36,6 +36,23 @@ public class Animation {
         } catch (IOException e) {}
             
 	}
+        
+        public Animation(Type type){
+            
+            try {
+                
+                if(type==Type.ENEMY){
+                    spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet_red.png"));
+                }
+                else{
+                    spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet.png"));
+                }
+                // The image is 320 by 256 with 5 by 4 frames.
+                resizedSpriteSheet = resize(spriteSheet,320/4,256/4);
+    
+        } catch (IOException e) {}
+            
+	}
 	
 	public void drawAnimation(Graphics g, double x, double y, int offset,int frameX, int frameY){
             //sneaky-snakes/sneaky-snakes/src/SneakySnakes/res/sprite_sheet.png 
@@ -59,4 +76,5 @@ public class Animation {
             
             return dimg;
         }  
+        
 }
