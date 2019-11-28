@@ -1,30 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SneakySnakes;
 
-import static SneakySnakes.Snake.SIZE_X;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-/**
- *
- * @author tommy
- */
 public class CPU1 extends Snake{
-    
-    //
     boolean westObstacle;
     boolean eastObstacle;
     boolean northObstacle;
     boolean southObstacle;
-    
   
     public CPU1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
         super(x, y, color, length, sneakysnakes);
@@ -32,11 +17,10 @@ public class CPU1 extends Snake{
     }
     
     private int iterations = -1;
+    
     @Override
-    Direction algorithm() {
-        
-        return easyMode();
-        
+    Direction algorithm() {    
+        return easyMode();       
     }
     
     private Direction circleMode(int circleSize){
@@ -108,8 +92,7 @@ public class CPU1 extends Snake{
         return false;
     }
     
-    public Direction getIdealDirection(Point target){
-        
+    public Direction getIdealDirection(Point target){       
         int xDist = target.x-this.x;
         int yDist = target.y-this.y;
         
@@ -117,20 +100,15 @@ public class CPU1 extends Snake{
         if(Math.abs(xDist)>Math.abs(yDist)){
             if(xDist<0){
                 direction=Direction.WEST;
-            }
-            else{
+            }else{
                 direction=Direction.EAST;
             }
-        }
-        else{
+        }else{
             if(yDist<0){
                 direction=Direction.NORTH;
-            }
-            else{
+            }else{
                 direction=Direction.SOUTH;
             }
-            
-            
         }
         return direction;
     }
@@ -161,7 +139,6 @@ public class CPU1 extends Snake{
                         direction=Direction.EAST;
                     }
                 }
-                
                 return direction;
             }
             return direction;
@@ -169,8 +146,6 @@ public class CPU1 extends Snake{
         //We don't have food to get, go int  circles regardless of obstacles
         else {
             return circleMode(10);
-        }
-        
-    }
-    
+        }   
+    }   
 }

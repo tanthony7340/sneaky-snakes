@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SneakySnakes;
 
 import java.awt.Color;
@@ -10,10 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
-/**
- *
- * @author tommy
- */
+
 public class Food extends Graphic{
     static final int SIZE_Y=16;
     static final int SIZE_X=16;
@@ -70,9 +62,9 @@ public class Food extends Graphic{
     @Override
     public void handleOverlap(){
         
-    }
+    }       
         
-        
+    @Override
     public LinkedList<Point> getXYList(){
         
         LinkedList<Point> coordinates = new LinkedList<>(); 
@@ -88,10 +80,12 @@ public class Food extends Graphic{
         }
     }
     
+    @Override
     public void loadObstacle(ArrayList<Point> list){
         this.snakeList=list;        
     }
     
+    @Override
     public void loadFood(ArrayList<Point> list){
         this.foodList=list; 
     }

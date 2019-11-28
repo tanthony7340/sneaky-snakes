@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SneakySnakes;
 
 import java.awt.Graphics;
@@ -11,9 +6,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -33,25 +25,19 @@ public class Animation {
                 // The image is 320 by 256 with 5 by 4 frames.
                 resizedSpriteSheet = resize(spriteSheet,320/4,256/4);
     
-        } catch (IOException e) {}
-            
+            }catch (IOException e) {}   
 	}
         
-        public Animation(Type type){
-            
+        public Animation(Type type){   
             try {
-                
                 if(type==Type.ENEMY){
                     spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet_red.png"));
-                }
-                else{
+                }else{
                     spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet.png"));
                 }
                 // The image is 320 by 256 with 5 by 4 frames.
                 resizedSpriteSheet = resize(spriteSheet,320/4,256/4);
-    
-        } catch (IOException e) {}
-            
+            } catch (IOException e) {}
 	}
 	
 	public void drawAnimation(Graphics g, double x, double y, int offset,int frameX, int frameY){
@@ -75,6 +61,5 @@ public class Animation {
             g2d.dispose();
             
             return dimg;
-        }  
-        
+        }    
 }

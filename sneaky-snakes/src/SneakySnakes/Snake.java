@@ -41,17 +41,13 @@ abstract public class Snake extends Graphic {
         direction = Direction.NORTH;
         
         for(int i = 0; i < length; i++){
-            segments.add(new Segment(x - i, y, color,direction)); //TODO: checks to make sure we don't start snake off screen
-        }
-        
+            segments.add(new Segment(x - i, y, color,direction));
+        }       
     }
     
-    //TODO
     @Override
     public void update(){
         processDirection();
-        
-        //we know direction
         segments.addFirst(new Segment(this.x, this.y, this.color, this.direction));
         if(!eaten) segments.removeLast();
         if(segments.size()>1)
@@ -59,22 +55,12 @@ abstract public class Snake extends Graphic {
             segments.get(1).updateSecond(this.direction);
             segments.getLast().getTail(segments.get(segments.size() - 2).direction);
         }
-        
-        
         eaten=false;
     }
     
     //TODO
     @Override
     public void render(Graphics g) {
-//        g.setColor(this.color);
-//        ListIterator<Segment> iterator = segments.listIterator();
-//        while(iterator.hasNext()){
-//            Segment next = iterator.next();
-//            g.fillRect(next.x*SIZE_X, next.y*SIZE_Y, SIZE_X, SIZE_Y);
-//        }
-        
-        
          ListIterator<Segment> iterator = segments.listIterator();
         while(iterator.hasNext()){
             Segment next = iterator.next();
@@ -88,10 +74,8 @@ abstract public class Snake extends Graphic {
         
     }
     
-    //We only need to check if the head has hit another segment
     @Override
-    public boolean isOverlapped(){
-        
+    public boolean isOverlapped(){       
         if(!segments.isEmpty()){
             ListIterator<Segment> iterator = segments.listIterator();
             Segment head = iterator.next();
@@ -104,8 +88,7 @@ abstract public class Snake extends Graphic {
             }
         }
         return false;
-    }
-    
+    }   
     
     @Override
     public void handleOverlap(){
@@ -118,18 +101,14 @@ abstract public class Snake extends Graphic {
     }
 
     @Override
-    public LinkedList<Point> getXYList(){
-        
+    public LinkedList<Point> getXYList(){       
         if(!segments.isEmpty()){
             LinkedList<Point> coordinates = new LinkedList<>();
             ListIterator<Segment> iterator = segments.listIterator();
-            Segment head = iterator.next();
             while(iterator.hasNext()){
                 Segment current = iterator.next();
-                coordinates.addFirst(new Point(current.x, current.y));
-                
-            }
-            
+                coordinates.addFirst(new Point(current.x, current.y));                
+            }            
             return coordinates;
         }
         
@@ -208,14 +187,15 @@ abstract public class Snake extends Graphic {
         }
     }
     
+    @Override
     public void loadObstacle(ArrayList<Point> list){
         this.snakeList=list;
-        for(Segment item:segments){
-            
+        for(Segment item:segments){            
             snakeList.add(new Point(item.x,item.y));
         }
     }
     
+    @Override
     public void loadFood(ArrayList<Point> list){
         this.foodList=list;
     }

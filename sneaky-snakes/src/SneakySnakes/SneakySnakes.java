@@ -2,8 +2,6 @@ package SneakySnakes;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import static java.awt.Color.black;
-import static java.awt.Color.red;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -24,10 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author 10158564
- */
 public class SneakySnakes extends Canvas implements Runnable, KeyListener {
    
     //contains 
@@ -236,14 +230,10 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             return;
         }
         
-        //
         Graphics g = bs.getDrawGraphics();
         
         //Background        
         g.drawImage(backgroundImg, 0, 0, null);
-        
-        //g.setColor(black);
-        //g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
         
         if(state == STATE.GAME) {
             gameEvent(g);
@@ -381,9 +371,8 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                     }
                 
             }
-        }//get graphic
-    }//check col
-          
+        }
+    }          
     
     public Point checkPoints(LinkedList<Point> coordinates,LinkedList<Point> coordinatesNext){
         //Now we have each graphics' coodinates
@@ -401,7 +390,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public void deadEvent(Graphics g){
         
         //Get color
-        g.setColor(red);
+        g.setColor(Color.red);
         Font font = g.getFont().deriveFont( 200.0f ); //TODO set text size based on window size
         
         // Get the FontMetrics
@@ -411,8 +400,6 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         int x = (WIDTH*SCALE - metrics.stringWidth(GAMEOVER)) / 2;
         // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
         int y =((HEIGHT*SCALE - metrics.getHeight()) / 2) + metrics.getAscent();
-        // Set the font
-        //g.setFont(getFont());
         
         //draw
         g.setFont(font);
@@ -424,7 +411,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public void gameEvent(Graphics g){
         for(Graphic graphic: graphicsList){
                 graphic.render(g);
-            }
+        }
     }
     
     public boolean checkWallCollision(Graphic item)
