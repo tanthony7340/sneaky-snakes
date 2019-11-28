@@ -17,6 +17,12 @@ import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -37,6 +43,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public Player1 player;
     public int numObjects = 0;
     public boolean influenced = false; //need better solution if we ever have more than one player
+    public BufferedImage backgroundImg;
     
     //private Menu menu;
     public final String TITLE = "Sneaky Snakes";
@@ -229,9 +236,14 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             return;
         }
         
+        //
         Graphics g = bs.getDrawGraphics();
-        g.setColor(black);
-        g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
+        
+        //Background        
+        g.drawImage(backgroundImg, 0, 0, null);
+        
+        //g.setColor(black);
+        //g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
         
         if(state == STATE.GAME) {
             gameEvent(g);
@@ -257,6 +269,15 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     
     public void init() {
+        
+        //Create background
+        try {
+            backgroundImg = ImageIO.read(new File("src/SneakySnakes/res/grassBest_1.png"));  
+            backgroundImg = Animation.resize(backgroundImg, WIDTH*SCALE, HEIGHT*SCALE);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(SneakySnakes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         requestFocus(); // So the game gains focus just at starting point.
         player = new Player1(20, 40, Color.WHITE, 5, this);
