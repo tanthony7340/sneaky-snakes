@@ -8,17 +8,17 @@ package SneakySnakes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.ListIterator;
-
 /**
  *
  * @author tommy
  */
 public class Food extends Graphic{
+    static final int SIZE_Y=16;
+    static final int SIZE_X=16;
     
+    public Animation anim = new Animation();
     private final Segment segment; //will only ever be one segment, but for dispay consistency i put it in an arraylist
     protected ArrayList<Point> foodList;
     protected ArrayList<Point> snakeList;
@@ -27,6 +27,7 @@ public class Food extends Graphic{
         super(x,y,sneakysnakes);        
         this.sneakysnakes=sneakysnakes;
         segment = new Segment(super.x, super.y, color,d);
+        segment.setIcon(0, 3);
         this.type=Type.FOOD;
     }
     
@@ -36,8 +37,8 @@ public class Food extends Graphic{
 
     @Override
     public void render(Graphics g) {
-        g.setColor(segment.color);
-        g.fillRect(super.x*16, super.y*16, 16, 16);
+        anim.drawAnimation(g, this.x*SIZE_X, this.y*SIZE_Y, 0, segment.frameX, segment.frameY);
+
     }
     
     @Override

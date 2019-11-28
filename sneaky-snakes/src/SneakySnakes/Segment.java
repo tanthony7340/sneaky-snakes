@@ -20,9 +20,9 @@ class Segment{
         this.x = x;
         this.y = y;
         this.color = color;
-        
+        this.direction=direction;
         //head is here
-        gethead(direction);
+        gethead();
     }
     
     @Override
@@ -30,13 +30,14 @@ class Segment{
         return "X Coord is: " + x + " Y Coord is: " + y + "\n";
     }
     
-    public void updateIcon(Direction d){
-        // get next direction
+    public void setIcon(int frameX, int frameY){
+        this.frameX = frameX;
+        this.frameY = frameY;
     }
     
-    public void gethead(Direction d){
+    private void gethead(){
         
-        switch (direction){
+        switch (this.direction){
             case NORTH:
                 frameX=3;
                 frameY=0;
@@ -46,11 +47,11 @@ class Segment{
                 frameY=0;
                 break;
             case SOUTH:
-                frameX=3;
+                frameX=4;
                 frameY=1;
                 break;
             case WEST:
-                frameX=4;
+                frameX=3;
                 frameY=1;
                 break;
             default:
@@ -65,20 +66,93 @@ class Segment{
         
         switch (direction){
             case NORTH:
+                if(nextDirection == Direction.NORTH){
+                    frameX=2;
+                    frameY=1;
+                    
+                }else if(nextDirection == Direction.EAST){
+                    frameX=0;
+                    frameY=0;
+                    
+                }else if(nextDirection == Direction.WEST){
+                    frameX=2;
+                    frameY=0;
+                }else{
+                    System.out.println("Illegal Direction");
+                }
+                break;
+            case EAST:
+                if(nextDirection == Direction.NORTH){
+                    frameX=2;
+                    frameY=2;
+                    
+                }else if(nextDirection == Direction.EAST){
+                    frameX=1;
+                    frameY=0;
+                    
+                }else if(nextDirection == Direction.SOUTH){
+                    frameX=2;
+                    frameY=0;
+                }else{
+                    System.out.println("Illegal Direction");                }
+                break;
+            case SOUTH:
+                if(nextDirection == Direction.EAST){
+                    frameX=0;
+                    frameY=1;
+                    
+                }else if(nextDirection == Direction.SOUTH){
+                    frameX=2;
+                    frameY=1;
+                    
+                }else if(nextDirection == Direction.WEST){
+                    frameX=2;
+                    frameY=2;
+                }else{
+                    System.out.println("Illegal Direction");
+                }
+                break;
+            case WEST:
+                if(nextDirection == Direction.NORTH){
+                    frameX=0;
+                    frameY=1;
+                    
+                }else if(nextDirection == Direction.SOUTH){
+                    frameX=0;
+                    frameY=0;
+                    
+                }else if(nextDirection == Direction.WEST){
+                    frameX=1;
+                    frameY=0;
+                }else{
+                    System.out.println("Illegal Direction");
+                }
+                break;
+        }
+        
+    }
+    
+    public void getTail(Direction nextDirection){   
+        switch (nextDirection){
+            case NORTH:
                 frameX=3;
-                frameY=0;
+                frameY=2;
                 break;
             case EAST:
                 frameX=4;
-                frameY=0;
+                frameY=2;
                 break;
             case SOUTH:
-                frameX=3;
-                frameY=1;
+                frameX=4;
+                frameY=3;
                 break;
             case WEST:
-                frameX=4;
-                frameY=1;
+                frameX=3;
+                frameY=3;
+                break;
+            default:
+                frameX=3;
+                frameY=3;
                 break;
         }
     }

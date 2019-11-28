@@ -37,10 +37,8 @@ public class Animation {
             
 	}
 	
-	public void drawAnimation(Graphics g, double x, double y, int offset){
+	public void drawAnimation(Graphics g, double x, double y, int offset,int frameX, int frameY){
             //sneaky-snakes/sneaky-snakes/src/SneakySnakes/res/sprite_sheet.png 
-            frameX=1;
-            frameY=0;
             //ublic BufferedImage getSubimage (int x, int y, int w, int h) {
             BufferedImage sprite = resizedSpriteSheet.getSubimage(
                     resizedSpriteSheet.getWidth()/5 * frameX, 

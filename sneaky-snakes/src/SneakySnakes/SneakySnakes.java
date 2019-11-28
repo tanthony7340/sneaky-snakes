@@ -261,8 +261,8 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         System.out.println("WIDTH:"+(SneakySnakes.WIDTH * SneakySnakes.SCALE /16));
         System.out.println("HEIGHT:"+(SneakySnakes.HEIGHT * SneakySnakes.SCALE /16));
         requestFocus(); // So the game gains focus just at starting point.
-//        player = new Player1(20, 40, Color.WHITE, 15, this);
-//        graphicsList.add(player);
+        player = new Player1(20, 40, Color.WHITE, 15, this);
+        //graphicsList.add(player);
         Food food = new Food(6, 49, Color.BLUE, this, Direction.NORTH);  
         graphicsList.add(food);
         
@@ -280,13 +280,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
 //        graphicsList.add(cpu5);
 //        CPU1 cpu6 = new CPU1(30,50, Color.DARK_GRAY,2, this);
 //        graphicsList.add(cpu6);
-        
-        
-        //System.out.println("player id="+player.getID());
-        //System.out.println("food id=" + food.getID() + " At:" + food.getX() + " " + food.getY());
-        //System.out.println("cpu id=" +cpu1.getID());
-        
-        
+     
         state=STATE.GAME;
         
         // Add input listeners
