@@ -29,7 +29,7 @@ abstract public class Snake extends Graphic {
     private int score = 0;
     private boolean eaten = false;
     public Animation anim = new Animation();
-    public Animation animEnemy = new Animation(Type.ENEMY);
+    public Animation animEnemy = new Animation(GraphicType.ENEMY);
     
     public Snake(int x, int y, int length, int id){
         super(x, y);
@@ -62,7 +62,7 @@ abstract public class Snake extends Graphic {
          ListIterator<Segment> iterator = segments.listIterator();
         while(iterator.hasNext()){
             Segment next = iterator.next();
-            if(type==Type.FRIEND){
+            if(type==GraphicType.FRIEND){
                 anim.drawAnimation(g, next.x*SIZE_X, next.y*SIZE_Y, 0, next.frameX, next.frameY);
             }
             else{
@@ -90,10 +90,10 @@ abstract public class Snake extends Graphic {
     
     @Override
     public void handleOverlap(){
-        if(type==Type.ENEMY){
+        if(type==GraphicType.ENEMY){
             processEvent(GraphicEvent.COLLISION);
         }
-        if(type==Type.FRIEND){
+        if(type==GraphicType.FRIEND){
             //Do nothing for now. This keeps the snakes on the screen
         }
     }

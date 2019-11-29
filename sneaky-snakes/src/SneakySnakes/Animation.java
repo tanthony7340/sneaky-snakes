@@ -28,15 +28,24 @@ public class Animation {
             }catch (IOException e) {}   
 	}
         
-        public Animation(Type type){   
+        public Animation(GraphicType type){   
             try {
-                if(type==Type.ENEMY){
+                if(type==GraphicType.ENEMY){
                     spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet_red.png"));
-                }else{
+                }else if(type==GraphicType.FRIEND){
                     spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet.png"));
                 }
+                else if(type==GraphicType.POWERUP){
+                    spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/magneton.png"));
+                }
+                
                 // The image is 320 by 256 with 5 by 4 frames.
-                resizedSpriteSheet = resize(spriteSheet,320/4,256/4);
+                if(type==GraphicType.POWERUP){
+                    resizedSpriteSheet = resize(spriteSheet,16,16);
+                }
+                else{
+                    resizedSpriteSheet = resize(spriteSheet,320/4,256/4);
+                }
             } catch (IOException e) {}
 	}
 	
@@ -50,6 +59,18 @@ public class Animation {
                     resizedSpriteSheet.getHeight()/4);
             
             g.drawImage(sprite, (int)x - offset, (int)y, null);
+	}
+        
+        public void drawAnimation(Graphics g, double x, double y){
+            //sneaky-snakes/sneaky-snakes/src/SneakySnakes/res/sprite_sheet.png 
+            //ublic BufferedImage getSubimage (int x, int y, int w, int h) {
+//            BufferedImage sprite = resizedSpriteSheet.getSubimage(
+//                    resizedSpriteSheet.getWidth()/5 * frameX, 
+//                    resizedSpriteSheet.getHeight()/4 * frameY, 
+//                    resizedSpriteSheet.getWidth()/5, 
+//                    resizedSpriteSheet.getHeight()/4);
+            
+            g.drawImage(resizedSpriteSheet, (int)x, (int)y, null);
 	}
         
         public static BufferedImage resize(BufferedImage img, int newW, int newH) {

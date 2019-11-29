@@ -7,11 +7,8 @@ package SneakySnakes;
 
 /**
  *
- * @author 10158564
+ * @author andrew
  */
-public enum GraphicEvent {
-    SNAKE_GROW,
-    FOOD_EATEN,
-    POWERUP_EATEN,
-    COLLISION
-}
+public enum GraphicType{
+        NA, FOOD, FRIEND, ENEMY, WALL,POWERUP;
+    }

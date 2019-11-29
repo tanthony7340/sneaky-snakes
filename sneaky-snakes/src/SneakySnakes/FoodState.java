@@ -9,6 +9,7 @@ package SneakySnakes;
  *
  * @author andrew
  */
-public enum Type{
-        NA, FOOD, FRIEND, ENEMY, WALL;
-    }
+public enum FoodState {
+    NONE,
+    MAGNET    
+}

@@ -13,7 +13,7 @@ public class CPU1 extends Snake{
   
     public CPU1(int x, int y, Color color, int length, int id){
         super(x, y, length, id);
-        this.type=Type.ENEMY;
+        this.type=GraphicType.ENEMY;
     }
     
     private int iterations = -1;

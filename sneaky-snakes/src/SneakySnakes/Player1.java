@@ -6,7 +6,7 @@ public class Player1 extends Snake{
     public Player1(int x, int y, int length, int id){
         super(x, y, length, id);
         this.direction=Direction.SOUTH;
-        this.type=Type.FRIEND;
+        this.type=GraphicType.FRIEND;
     }
     
     @Override

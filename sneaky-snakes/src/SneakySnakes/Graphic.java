@@ -5,8 +5,7 @@
  */
 package SneakySnakes;
 
-import static SneakySnakes.Type.NA;
-import java.awt.Color;
+import static SneakySnakes.GraphicType.*;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ abstract class Graphic{
     protected int y;
     protected int velX;
     protected int velY;
-    protected Type type;
+    protected GraphicType type;
     
     public Graphic(){
         this.x=0;
@@ -61,7 +60,7 @@ abstract class Graphic{
         return ID;
     }
 
-    public Type getType() {
+    public GraphicType getType() {
         return type;
     }
     

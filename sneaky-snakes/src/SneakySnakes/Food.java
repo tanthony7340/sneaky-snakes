@@ -13,24 +13,37 @@ public class Food extends Graphic{
     private final Segment segment; //will only ever be one segment, but for dispay consistency i put it in an arraylist
     protected ArrayList<Point> foodList;
     protected ArrayList<Point> snakeList;
+    protected Point foodPoint = new Point();
+    protected FoodState foodstate = FoodState.NONE;
     
     public Food(int x, int y, Direction d, int id){
         segment = new Segment(x, y, d);
         segment.setIcon(0, 3);
-        this.type=Type.FOOD;
+        this.type=GraphicType.FOOD;
         this.ID=id;
         this.y=y;
-        this.x=x;
+        this.x=x;        
+        foodPoint.setLocation(x, y);
     }
     
     @Override
-    public void update() {}
+    public void update(){
+        switch(foodstate){
+            case MAGNET:
+                magnetState();
+                break;
+            case NONE:
+                break;
+            default:
+                break;
+        }
+    }
 
 
     @Override
     public void render(Graphics g) {
         anim.drawAnimation(g, this.x*SIZE_X, this.y*SIZE_Y, 0, segment.frameX, segment.frameY);
-
+        System.out.println("foodstate in food="+foodstate);
     }
     
     @Override
@@ -85,6 +98,14 @@ public class Food extends Graphic{
             if(this.x==SneakySnakes.WIDTH * SneakySnakes.SCALE/16){
                 this.x-=1;
             }
+            
+            // set food point
+            foodPoint.setLocation(this.x, this.y);
+            
+            //Reset state from power ups
+            if(foodstate==FoodState.MAGNET){
+                foodstate=FoodState.NONE;
+            }
         }
     }
     
@@ -96,5 +117,31 @@ public class Food extends Graphic{
     @Override
     public void loadFood(ArrayList<Point> list){
         this.foodList=list; 
+    }
+    
+    private void magnetState(){
+        for(Point point:snakeList){
+            if(point.distance(foodPoint)<=3){
+                //X distnance
+                if(point.x-foodPoint.x>0){
+                    this.x+=1;
+                }
+                else if(point.x-foodPoint.x<0){
+                this.x-=1;
+                }
+                else{}
+                
+                //y distance
+                if(point.y-foodPoint.y>0){
+                    this.y+=1;
+                }
+                else if(point.y-foodPoint.y<0){
+                this.y-=1;
+                }
+                else{}
+                
+                foodPoint.setLocation(this.x, this.y);
+            }
+        }
     }
 }
