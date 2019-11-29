@@ -1,5 +1,6 @@
 package SneakySnakes;
 
+import PowerUps.MagnetFood;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -270,15 +271,15 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         }
         
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(20, 40, 5, 1);
+        player = new Player1(20, 0, 5, 1);
         graphicsList.add(player);
         
-        Food food = new Food(33, 49, Direction.NORTH, 2);  
+        Food food = new MagnetFood(33, 49, Direction.NORTH, 2);  
         graphicsList.add(food);
         
         //CPUs
-        CPU1 cpu1 = new CPU1(8,1, Color.DARK_GRAY,6, 3);
-        graphicsList.add(cpu1);
+//        CPU1 cpu1 = new CPU1(8,1, Color.DARK_GRAY,6, 3);
+//        graphicsList.add(cpu1);
      
         state=STATE.GAME;
         
@@ -434,6 +435,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         ArrayList<Graphic> foodList = new ArrayList<>();
         ArrayList<Point> foodLocations = new ArrayList<>();
         ArrayList<Point> snakeLocations = new ArrayList<>();
+        ArrayList<Point> snakeHeadLocations = new ArrayList<>();
         
         for(Graphic item:graphicsList){ //Get all graphic items
             
@@ -452,8 +454,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             //Record friend locations   
             if(item.getType()==Type.FRIEND){
                 snakeLocations.add(new Point(item.x,item.y));                
-            }
-            
+            }            
         }
         
         //Give food location to enemies
@@ -472,7 +473,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         
         //Give snake locations to food
         for(Graphic item:foodList){
-            item.loadObstacle(foodLocations);
+            item.loadObstacle(snakeLocations);
         }
     }
     

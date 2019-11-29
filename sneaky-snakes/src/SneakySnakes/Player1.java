@@ -1,6 +1,5 @@
 package SneakySnakes;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Player1 extends Snake{

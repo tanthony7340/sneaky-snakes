@@ -5,8 +5,6 @@
  */
 package SneakySnakes;
 
-import java.awt.Color;
-
 class Segment{
     int x;
     int y;
