@@ -4,10 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Player1 extends Snake{
-    public Player1(int x, int y, Color color, int length, SneakySnakes sneakysnakes){
-        super(x, y, color, length, sneakysnakes);
+    public Player1(int x, int y, int length, int id){
+        super(x, y, length, id);
         this.direction=Direction.SOUTH;
-        this.sneakysnakes=sneakysnakes;
         this.type=Type.FRIEND;
     }
     

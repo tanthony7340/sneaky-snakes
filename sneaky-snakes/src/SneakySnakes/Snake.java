@@ -32,23 +32,22 @@ abstract public class Snake extends Graphic {
     public Animation anim = new Animation();
     public Animation animEnemy = new Animation(Type.ENEMY);
     
-    public Snake(int x, int y, Color color, int length,SneakySnakes sneakysnakes){
-        super(x, y, sneakysnakes);
+    public Snake(int x, int y, int length, int id){
+        super(x, y);
         this.x=x;
         this.y=y;
-        this.color=color;
-        this.sneakysnakes=sneakysnakes;
+        this.ID=id;
         direction = Direction.NORTH;
         
         for(int i = 0; i < length; i++){
-            segments.add(new Segment(x - i, y, color,direction));
+            segments.add(new Segment(x - i, y,direction));
         }       
     }
     
     @Override
     public void update(){
         processDirection();
-        segments.addFirst(new Segment(this.x, this.y, this.color, this.direction));
+        segments.addFirst(new Segment(this.x, this.y, this.direction));
         if(!eaten) segments.removeLast();
         if(segments.size()>1)
         {

@@ -17,13 +17,11 @@ import java.util.LinkedList;
  * @author tommy
  */
 abstract class Graphic{
-    private int ID = 0;
+    protected int ID = 0;
     protected int x;
     protected int y;
     protected int velX;
     protected int velY;
-    protected Color color;
-    protected SneakySnakes sneakysnakes;
     protected Type type;
     
     public Graphic(){
@@ -33,13 +31,18 @@ abstract class Graphic{
         this.type=NA;
     }
     
-    public Graphic(int x, int y,SneakySnakes sneakysnakes){        
+    public Graphic(int x, int y){        
         this.x = x;
         this.y = y;
-        sneakysnakes.graphicAdded();
-        ID = sneakysnakes.numObjects;
-        this.sneakysnakes=sneakysnakes;
         this.type=NA;
+        this.ID=(int) (Math.random()*10000);
+    }
+    
+    public Graphic(int x, int y, int id){        
+        this.x = x;
+        this.y = y;
+        this.type=NA;
+        this.ID=id;
     }
     
     public abstract void update();

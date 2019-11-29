@@ -10,17 +10,16 @@ import java.awt.Color;
 class Segment{
     int x;
     int y;
-    Color color; 
     SneakySnakes sneakysnakes;
     Direction direction;
     int frameX;
     int frameY;
     
-    public Segment(int x, int y, Color color,Direction direction){
+    public Segment(int x, int y,Direction direction){
         this.x = x;
         this.y = y;
-        this.color = color;
         this.direction=direction;
+        
         //head is here
         gethead();
     }

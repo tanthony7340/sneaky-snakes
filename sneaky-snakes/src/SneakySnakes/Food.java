@@ -15,12 +15,13 @@ public class Food extends Graphic{
     protected ArrayList<Point> foodList;
     protected ArrayList<Point> snakeList;
     
-    public Food(int x, int y, Color color, SneakySnakes sneakysnakes, Direction d){        
-        super(x,y,sneakysnakes);        
-        this.sneakysnakes=sneakysnakes;
-        segment = new Segment(super.x, super.y, color,d);
+    public Food(int x, int y, Direction d, int id){
+        segment = new Segment(x, y, d);
         segment.setIcon(0, 3);
         this.type=Type.FOOD;
+        this.ID=id;
+        this.y=y;
+        this.x=x;
     }
     
     @Override
@@ -75,8 +76,16 @@ public class Food extends Graphic{
     @Override
     public void processEvent(GraphicEvent event){
         if(event == GraphicEvent.FOOD_EATEN){
-            this.x=(int) Math.round(Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE /16 - 1);
-            this.y=(int) Math.round(Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE/16 - 1);
+            this.x=(int) Math.round(Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE /16);
+            this.y=(int) Math.round(Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE/16);
+            
+            if(this.y==SneakySnakes.HEIGHT * SneakySnakes.SCALE/16){
+                this.y-=1;
+            }
+            
+            if(this.x==SneakySnakes.WIDTH * SneakySnakes.SCALE/16){
+                this.x-=1;
+            }
         }
     }
     
