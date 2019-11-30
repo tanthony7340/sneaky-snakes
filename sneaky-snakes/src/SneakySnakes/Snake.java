@@ -27,9 +27,9 @@ abstract public class Snake extends Graphic {
     protected ArrayList<Point> snakeList;
     protected Direction direction = Direction.NORTH;
     private int score = 0;
-    private boolean eaten = false;
+    private int segmentsToAdd = 0;
     public Animation anim = new Animation();
-    public Animation animEnemy = new Animation(GraphicType.ENEMY);
+    public Animation animEnemy = new Animation(GraphicType.ENEMY, PowerUpType.NONE);
     
     public Snake(int x, int y, int length, int id){
         super(x, y);
@@ -47,13 +47,16 @@ abstract public class Snake extends Graphic {
     public void update(){
         processDirection();
         segments.addFirst(new Segment(this.x, this.y, this.direction));
-        if(!eaten) segments.removeLast();
+        if(segmentsToAdd ==0){
+            segments.removeLast();
+        }else{
+            segmentsToAdd--;
+        }
         if(segments.size()>1)
         {
             segments.get(1).updateSecond(this.direction);
             segments.getLast().getTail(segments.get(segments.size() - 2).direction);
         }
-        eaten=false;
     }
     
     //TODO
@@ -130,9 +133,7 @@ abstract public class Snake extends Graphic {
     
     public void addSegment()
     {
-        eaten=true;
-        //processDirection();
-        //segments.add(new Segment(this.x, this.y, this.color));
+        segmentsToAdd++;
     }
     
     public void influenceDirection(Direction directionIn){
@@ -159,12 +160,20 @@ abstract public class Snake extends Graphic {
     
     @Override
     public void processEvent(GraphicEvent event){
-        if(event==GraphicEvent.SNAKE_GROW){
-            addSegment();
-            score++;
+        if(null!=event)switch (event) {
+            case SNAKE_GROW:
+                addSegment();
+                score++;
+                break;
+            case COLLISION:
+                segments.removeAll(segments);
+                break;
+            case GROWTH:
+                segmentsToAdd+=3;
+                break;
+            default:
+                break;
         }
-        if(event==GraphicEvent.COLLISION)
-            segments.removeAll(segments);
     }
     
     public void processDirection(){

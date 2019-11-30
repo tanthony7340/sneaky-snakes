@@ -34,13 +34,13 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public static final int HEIGHT = WIDTH / 12 * 9;
     public static final int SCALE = 4;
     private static SneakySnakes instance;
-    public Player1 player;
     public int numObjects = 0;
     public boolean influenced = false; //need better solution if we ever have more than one player
     public BufferedImage backgroundImg;
     
     Food food = new Food(33, 49, Direction.NORTH, 2);  //TODO move this to a better place
     PowerUpHandler powerUpHandler = new PowerUpHandler(10, 10, Direction.NORTH, 4); //TODO move this somehwre else
+    public Player1 player; //TODO move this somehwre else
     
     //private Menu menu;
     public final String TITLE = "Sneaky Snakes";
@@ -283,8 +283,15 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         //PowerUpHandler powerUpHandler = new PowerUpHandler(10, 10, Direction.NORTH, 4);
         graphicsList.add(powerUpHandler);
         //CPUs
-//        CPU1 cpu1 = new CPU1(8,1, Color.DARK_GRAY,6, 3);
-//        graphicsList.add(cpu1);
+        CPU1 cpu1 = new CPU1(10,10, Color.DARK_GRAY,6, 3);
+        graphicsList.add(cpu1);
+        CPU1 cpu2 = new CPU1(50, 12, Color.DARK_GRAY,6, 3);
+        graphicsList.add(cpu2);
+        
+        CPU1 cpu3 = new CPU1(60,30, Color.DARK_GRAY,6, 3);
+        graphicsList.add(cpu3);
+        CPU1 cpu4 = new CPU1(20,20, Color.DARK_GRAY,6, 3);
+        graphicsList.add(cpu4);
      
         state=STATE.GAME;
         
@@ -351,7 +358,11 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                             }
                             if((item.getType()==GraphicType.FRIEND || item.getType()==GraphicType.ENEMY) && nextItem.getType()==GraphicType.POWERUP){
                                 nextItem.processEvent(GraphicEvent.POWERUP_EATEN);
-                                food.foodstate=powerUpHandler.setFoodState();
+                                if(powerUpHandler.setFoodState() == FoodState.MAGNET){
+                                    food.foodstate=powerUpHandler.setFoodState();
+                                }else if(powerUpHandler.setFoodState() == FoodState.GROWTH){
+                                   item.processEvent(GraphicEvent.GROWTH);
+                                }
                                 System.out.println("STAET "+ food.foodstate);
                             }
                             if(item.getType()==GraphicType.FRIEND && nextItem.getType()==GraphicType.ENEMY  && coordinates.getLast().equals(theCollision)){
@@ -445,7 +456,6 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         ArrayList<Graphic> foodList = new ArrayList<>();
         ArrayList<Point> foodLocations = new ArrayList<>();
         ArrayList<Point> snakeLocations = new ArrayList<>();
-        ArrayList<Point> snakeHeadLocations = new ArrayList<>();
         
         for(Graphic item:graphicsList){ //Get all graphic items
             

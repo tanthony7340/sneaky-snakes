@@ -11,5 +11,6 @@ package SneakySnakes;
  */
 public enum FoodState {
     NONE,
-    MAGNET    
+    MAGNET,
+    GROWTH
 }

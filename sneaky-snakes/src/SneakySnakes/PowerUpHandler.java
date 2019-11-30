@@ -1,9 +1,6 @@
 package SneakySnakes;
 
-import SneakySnakes.*;
 import static SneakySnakes.Food.SIZE_X;
-import static SneakySnakes.PowerUpType.MAGNET;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
@@ -23,7 +20,8 @@ public class PowerUpHandler extends Food {
     private PowerUpType nextPowerUp;
     private FoodState foodState=FoodState.NONE;
     private PowerUpType lastPowerEaten= PowerUpType.NONE;
-    public Animation anim = new Animation(GraphicType.POWERUP);
+    public Animation magnetAnim = new Animation(GraphicType.POWERUP, PowerUpType.MAGNET);
+    public Animation growthAnim = new Animation(GraphicType.POWERUP, PowerUpType.GROWTH);
     public PowerUpHandler(int x, int y, Direction d, int id) {
         super(x, y, d, id);
         this.x=x;
@@ -42,7 +40,10 @@ public class PowerUpHandler extends Food {
                 case MAGNET:
                     //g.setColor(Color.red);
                     //g.fillRect(x*SIZE_X, y*SIZE_Y, SIZE_X, SIZE_Y);
-                    anim.drawAnimation(g, this.x*SIZE_X, this.y*SIZE_Y);
+                    magnetAnim.drawAnimation(g, this.x*SIZE_X, this.y*SIZE_Y);
+                    break;
+                case GROWTH:
+                    growthAnim.drawAnimation(g, this.x*SIZE_X, this.y*SIZE_Y);
                     break;
                 case NONE:
                     break;
@@ -72,8 +73,10 @@ public class PowerUpHandler extends Food {
                 this.x-=1;
             }
             
-            if(nextPowerUp==MAGNET){
+            if(nextPowerUp==PowerUpType.MAGNET){
                 foodState=foodState.MAGNET;
+            }else if(nextPowerUp==PowerUpType.GROWTH){
+                foodState=foodState.GROWTH;
             }
             else{
                 foodState=foodState.NONE;

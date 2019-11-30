@@ -28,7 +28,7 @@ public class Animation {
             }catch (IOException e) {}   
 	}
         
-        public Animation(GraphicType type){   
+        public Animation(GraphicType type, PowerUpType powerup){   
             try {
                 if(type==GraphicType.ENEMY){
                     spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet_red.png"));
@@ -36,9 +36,17 @@ public class Animation {
                     spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/sprite_sheet.png"));
                 }
                 else if(type==GraphicType.POWERUP){
-                    spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/magneton.png"));
+                    switch(powerup){
+                            case MAGNET:
+                                spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/magneton.png"));
+                                break;
+                            case GROWTH:
+                                spriteSheet = ImageIO.read(new File("src/SneakySnakes/res/growth.png"));
+                                break;
+                            case NONE:
+                                break;
+                    }
                 }
-                
                 // The image is 320 by 256 with 5 by 4 frames.
                 if(type==GraphicType.POWERUP){
                     resizedSpriteSheet = resize(spriteSheet,16,16);

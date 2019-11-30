@@ -13,5 +13,6 @@ public enum GraphicEvent {
     SNAKE_GROW,
     FOOD_EATEN,
     POWERUP_EATEN,
-    COLLISION
+    COLLISION,
+    GROWTH
 }

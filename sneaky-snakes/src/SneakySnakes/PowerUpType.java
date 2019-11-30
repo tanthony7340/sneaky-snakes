@@ -11,6 +11,7 @@ package SneakySnakes;
  */
 public enum PowerUpType {
     NONE,
-    MAGNET;
+    MAGNET,
+    GROWTH;
     
 }
