@@ -5,6 +5,7 @@
  */
 package SneakySnakes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ abstract public class Snake extends Graphic {
     protected ArrayList<Point> foodList;
     protected ArrayList<Point> snakeList;
     protected Direction direction = Direction.NORTH;
-    private int score = 0;
+    protected int score = 0;
     private int segmentsToAdd = 0;
     public Animation anim = new Animation();
     public Animation animEnemy = new Animation(GraphicType.ENEMY, PowerUpType.NONE);

@@ -104,7 +104,6 @@ public class PowerUpHandler extends Food {
     }
     
     public PowerUpType getRandomPowerup() {
-        System.out.println("get random power up was run");
             Random random = new Random();
             return PowerUpType.values()[random.nextInt(PowerUpType.values().length)];
         }

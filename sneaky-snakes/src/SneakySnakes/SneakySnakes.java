@@ -30,15 +30,16 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     
     private boolean running = false;
     private Thread thread;
-    public static final int WIDTH = 320;
+    public static final int WIDTH = 320-16*6;
     public static final int HEIGHT = WIDTH / 12 * 9;
     public static final int SCALE = 4;
+    public static final int TOPBAR_HEIGHT = HEIGHT*SCALE/16;
     private static SneakySnakes instance;
     public int numObjects = 0;
     public boolean influenced = false; //need better solution if we ever have more than one player
     public BufferedImage backgroundImg;
     
-    Food food = new Food(33, 49, Direction.NORTH, 2);  //TODO move this to a better place
+    Food food = new Food(33, 10, Direction.NORTH, 2);  //TODO move this to a better place
     PowerUpHandler powerUpHandler = new PowerUpHandler(10, 10, Direction.NORTH, 4); //TODO move this somehwre else
     public Player1 player; //TODO move this somehwre else
     
@@ -238,6 +239,10 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         //Background        
         g.drawImage(backgroundImg, 0, 0, null);
         
+        //top bar
+        g.setColor(Color.getHSBColor(219f/360f, 0f/100f, 25f/100f));
+        g.fillRect(0, 0, WIDTH*SCALE,TOPBAR_HEIGHT-8);
+        
         if(state == STATE.GAME) {
             gameEvent(g);
             
@@ -273,7 +278,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         }
         
         requestFocus(); // So the game gains focus just at starting point.
-        player = new Player1(20, 0, 5, 1);
+        player = new Player1(20, 0+(TOPBAR_HEIGHT/16), 5, 1);
         graphicsList.add(player);
         
         
@@ -283,15 +288,15 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         //PowerUpHandler powerUpHandler = new PowerUpHandler(10, 10, Direction.NORTH, 4);
         graphicsList.add(powerUpHandler);
         //CPUs
-        CPU1 cpu1 = new CPU1(10,10, Color.DARK_GRAY,6, 3);
+        CPU1 cpu1 = new CPU1(10,30, Color.DARK_GRAY,6, 3);
         graphicsList.add(cpu1);
-        CPU1 cpu2 = new CPU1(50, 12, Color.DARK_GRAY,6, 3);
-        graphicsList.add(cpu2);
-        
-        CPU1 cpu3 = new CPU1(60,30, Color.DARK_GRAY,6, 3);
-        graphicsList.add(cpu3);
-        CPU1 cpu4 = new CPU1(20,20, Color.DARK_GRAY,6, 3);
-        graphicsList.add(cpu4);
+//        CPU1 cpu2 = new CPU1(50, 12, Color.DARK_GRAY,6, 3);
+//        graphicsList.add(cpu2);
+//        
+//        CPU1 cpu3 = new CPU1(60,30, Color.DARK_GRAY,6, 3);
+//        graphicsList.add(cpu3);
+//        CPU1 cpu4 = new CPU1(20,20, Color.DARK_GRAY,6, 3);
+//        graphicsList.add(cpu4);
      
         state=STATE.GAME;
         
@@ -363,7 +368,6 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                                 }else if(powerUpHandler.setFoodState() == FoodState.GROWTH){
                                    item.processEvent(GraphicEvent.GROWTH);
                                 }
-                                System.out.println("STAET "+ food.foodstate);
                             }
                             if(item.getType()==GraphicType.FRIEND && nextItem.getType()==GraphicType.ENEMY  && coordinates.getLast().equals(theCollision)){
                                 state=STATE.DEAD;
@@ -403,12 +407,11 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         
         //Get color
         g.setColor(Color.red);
-        Font font = g.getFont().deriveFont( 200.0f ); //TODO set text size based on window size
+        Font font = g.getFont().deriveFont((float) WIDTH*SCALE/8); //TODO set text size based on window size
         
         // Get the FontMetrics
         FontMetrics metrics = g.getFontMetrics(font);
         // Determine the X coordinate for the text
-        Rectangle rect = null;
         int x = (WIDTH*SCALE - metrics.stringWidth(GAMEOVER)) / 2;
         // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
         int y =((HEIGHT*SCALE - metrics.getHeight()) / 2) + metrics.getAscent();
@@ -443,7 +446,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
                 return true;
             }
             //Top
-            if(point.y<0){
+            if(point.y<TOPBAR_HEIGHT/16){
                 return true;
             }
         }        

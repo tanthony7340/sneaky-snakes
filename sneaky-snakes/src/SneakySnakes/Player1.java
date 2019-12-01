@@ -1,5 +1,7 @@
 package SneakySnakes;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class Player1 extends Snake{
@@ -16,7 +18,11 @@ public class Player1 extends Snake{
     
     @Override
     public void render(Graphics g) {
-       super.render(g);
+        super.render(g);
+        Font font = g.getFont().deriveFont( 20.0f );
+        g.setFont(font);
+        g.setColor(Color.white);
+        g.drawString( "Score: " + String.valueOf(score),0 ,20);
         
     }
     @Override

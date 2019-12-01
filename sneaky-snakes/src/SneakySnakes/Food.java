@@ -1,5 +1,6 @@
 package SneakySnakes;
 
+import static SneakySnakes.SneakySnakes.TOPBAR_HEIGHT;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -43,7 +44,6 @@ public class Food extends Graphic{
     @Override
     public void render(Graphics g) {
         anim.drawAnimation(g, this.x*SIZE_X, this.y*SIZE_Y, 0, segment.frameX, segment.frameY);
-        System.out.println("foodstate in food="+foodstate);
     }
     
     @Override
@@ -88,8 +88,15 @@ public class Food extends Graphic{
     @Override
     public void processEvent(GraphicEvent event){
         if(event == GraphicEvent.FOOD_EATEN){
-            this.x=(int) Math.round(Math.random() * SneakySnakes.WIDTH * SneakySnakes.SCALE /16);
-            this.y=(int) Math.round(Math.random() * SneakySnakes.HEIGHT * SneakySnakes.SCALE/16);
+            //r.nextInt(high-low) + low;
+            int xLow=0;
+            int xHigh=SneakySnakes.WIDTH * SneakySnakes.SCALE /16;
+            int yLow = TOPBAR_HEIGHT/16;
+            int yHigh = SneakySnakes.HEIGHT * SneakySnakes.SCALE/16;
+            
+            this.x=(int) Math.round(Math.random() * (xHigh-xLow) + xLow);
+            
+            this.y=(int) Math.round(Math.random() * (yHigh-yLow) + yLow);
             
             if(this.y==SneakySnakes.HEIGHT * SneakySnakes.SCALE/16){
                 this.y-=1;
