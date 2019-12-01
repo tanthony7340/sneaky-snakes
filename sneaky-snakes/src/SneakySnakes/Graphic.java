@@ -15,7 +15,7 @@ import java.util.LinkedList;
  *
  * @author tommy
  */
-abstract class Graphic{
+public abstract class Graphic{
     protected int ID = 0;
     protected int x;
     protected int y;
@@ -64,15 +64,15 @@ abstract class Graphic{
         return type;
     }
     
-    abstract boolean isOverlapped();
+    public abstract boolean isOverlapped();
     
-    abstract void handleOverlap();
+    public abstract void handleOverlap();
     
-    abstract LinkedList<Point> getXYList();
+    public abstract LinkedList<Point> getXYList();
     
-    abstract void processEvent(GraphicEvent event);
+    public abstract void processEvent(GraphicEvent event);
     
-    abstract void loadObstacle(ArrayList<Point> list);
+    public abstract void loadObstacle(ArrayList<Point> list);
     
-    abstract void loadFood(ArrayList<Point> list);
+    public abstract void loadFood(ArrayList<Point> list);
 }

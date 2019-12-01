@@ -35,6 +35,7 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public static final int SCALE = 4;
     public static final int TOPBAR_HEIGHT = HEIGHT*SCALE/16;
     private static SneakySnakes instance;
+    private Menu menu = new Menu();
     public int numObjects = 0;
     public boolean influenced = false; //need better solution if we ever have more than one player
     public BufferedImage backgroundImg;
@@ -90,6 +91,8 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     public void keyReleased(KeyEvent e) { 
         
     }
+    
+    
     
     public static enum STATE {
         MENU,
@@ -147,9 +150,6 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
             lastTime = now;
             if(delta >= 1)
             { 
-                processCPU();
-                checkCollisions();
-                deleteCPUs();
                 update(); // Calculates
                 updates++;
                 delta--;
@@ -206,8 +206,18 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
     {
         switch(state){
             case MENU:
+                menu.update();
+                if(menu.isPlay())
+                    state=STATE.GAME;
                 break;
             case GAME:
+                if(menu!=null)
+                {
+                    menu = null;
+                }
+                processCPU();
+                checkCollisions();
+                deleteCPUs();
                 for(Graphic graphic: graphicsList){
                     graphic.update();
                 }
@@ -236,18 +246,21 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         
         Graphics g = bs.getDrawGraphics();
         
-        //Background        
-        g.drawImage(backgroundImg, 0, 0, null);
         
-        //top bar
-        g.setColor(Color.getHSBColor(219f/360f, 0f/100f, 25f/100f));
-        g.fillRect(0, 0, WIDTH*SCALE,TOPBAR_HEIGHT-8);
         
         if(state == STATE.GAME) {
+            //Background
+            g.drawImage(backgroundImg, 0, 0, null);
+            
+            //top bar
+            g.setColor(Color.getHSBColor(219f/360f, 0f/100f, 25f/100f));
+            g.fillRect(0, 0, WIDTH*SCALE,TOPBAR_HEIGHT-8);
+            
+            //
             gameEvent(g);
             
         }else if(state == STATE.MENU) {
-            //menu.render(g);
+            menu.render(g);
         }else if(state == STATE.DEAD){
             gameEvent(g); //keep snakes on screen
             deadEvent(g); //draw game over
@@ -279,29 +292,27 @@ public class SneakySnakes extends Canvas implements Runnable, KeyListener {
         
         requestFocus(); // So the game gains focus just at starting point.
         player = new Player1(20, 0+(TOPBAR_HEIGHT/16), 5, 1);
+        
+        //player and food
         graphicsList.add(player);
-        
-        
         graphicsList.add(food);
         
         //power up handler
-        //PowerUpHandler powerUpHandler = new PowerUpHandler(10, 10, Direction.NORTH, 4);
         graphicsList.add(powerUpHandler);
         //CPUs
         CPU1 cpu1 = new CPU1(10,30, Color.DARK_GRAY,6, 3);
         graphicsList.add(cpu1);
-//        CPU1 cpu2 = new CPU1(50, 12, Color.DARK_GRAY,6, 3);
-//        graphicsList.add(cpu2);
-//        
-//        CPU1 cpu3 = new CPU1(60,30, Color.DARK_GRAY,6, 3);
-//        graphicsList.add(cpu3);
-//        CPU1 cpu4 = new CPU1(20,20, Color.DARK_GRAY,6, 3);
-//        graphicsList.add(cpu4);
      
-        state=STATE.GAME;
+        state=STATE.MENU;
+        
+        // Create Menu
+	menu = new Menu();
         
         // Add input listeners
         addKeyListener(this);
+	addMouseListener(menu);
+        
+        
         
     }
 
